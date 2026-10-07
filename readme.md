@@ -65,7 +65,7 @@ Each tutorial folder follows the same layout:
 ### 1. Activate the virtual environment
 
 ```batch
-cd E:\omniverse_env
+cd YOUR_DIRECTORY\
 Scripts\activate
 ```
 

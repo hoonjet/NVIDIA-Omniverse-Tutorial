@@ -42,7 +42,6 @@ E:\omniverse_env\
 │   ├── verify_all_tutorials.py      # Programmatic verification (193 checks)
 │   ├── verification_report.md       # Detailed verification report
 │   └── guide.md                     # Tool usage guide
-├── Include\                         # Python headers (venv)
 ├── test_usd_import.py               # Quick USD import sanity check
 └── pyvenv.cfg                       # Virtual environment config
 ```

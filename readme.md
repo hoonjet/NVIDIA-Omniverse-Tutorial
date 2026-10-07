@@ -43,8 +43,6 @@ E:\omniverse_env\
 │   ├── verification_report.md       # Detailed verification report
 │   └── guide.md                     # Tool usage guide
 ├── Include\                         # Python headers (venv)
-├── Lib\                             # Python packages (venv)
-├── Scripts\                         # venv executables (activate, python.exe)
 ├── test_usd_import.py               # Quick USD import sanity check
 └── pyvenv.cfg                       # Virtual environment config
 ```

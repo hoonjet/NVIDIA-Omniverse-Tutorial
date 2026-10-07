@@ -1,14 +1,14 @@
 # NVIDIA Omniverse Learning Guide
 
-> **Location:** `E:\omniverse_env\`
-> **Virtual Environment:** `E:\omniverse_env\` (Python 3.8 + usd-core 26.3)
+> **Location:** `\omniverse_env\`
+> **Virtual Environment:** `YOUR_DIRECTORY\omniverse_env\` (Python 3.8 + usd-core 26.3)
 > **Official Link:** https://www.nvidia.com/en-us/omniverse/
 
 ---
 
 ## 1. Overview
 
-This guide is designed to help you learn **USD (Universal Scene Description)**, the core technology of NVIDIA Omniverse, using a virtual environment that does not affect other functionality on the E:\ drive. Following the same pattern as the existing PhysicsNeMo environment built at `E:\physicsnemo_env`, this provides an isolated virtual environment for learning USD/Omniverse concepts.
+This guide is designed to help you learn **USD (Universal Scene Description)**, the core technology of NVIDIA Omniverse, using a virtual environment that does not affect other functionality on the YOUR_DIRECTORY\ drive. Following the same pattern as the existing PhysicsNeMo environment built at `YOUR_DIRECTORY\physicsnemo_env`, this provides an isolated virtual environment for learning USD/Omniverse concepts.
 
 ### Environment Diagram
 
@@ -70,13 +70,13 @@ Step 5: Convert real PhysicsNeMo model outputs to USD
 
 ```batch
 :: Open Command Prompt (cmd)
-cd E:\omniverse_env
+cd YOUR_DIRECTORY\omniverse_env
 Scripts\activate
 ```
 
-When the prompt changes to `(omniverse_env)`, activation is complete:
+When the prompt changes to `(omniverse_env)`, activation is completYOUR_DIRECTORY
 ```
-(omniverse_env) E:\omniverse_env>
+(omniverse_env) YOUR_DIRECTORY\omniverse_env>
 ```
 
 ### 3.2 Verify the Environment
@@ -131,11 +131,11 @@ Omniverse Kit is an application framework built on top of USD.
 - **Live Sync**: Real-time collaborative editing via Nucleus server
 - **Layer Composition**: Combining multiple layer opinions (stronger opinion wins)
 
-> **Note:** The current system (Quadro P4000, Pascal architecture) does not have RT cores, so full Kit RTX rendering is not available. Tutorials 06-08 use USD-only APIs to simulate Kit concepts. In an RTX GPU environment, the same concepts apply directly using `omni.kit.*` APIs.
+> **NotYOUR_DIRECTORY** The current system (Quadro P4000, Pascal architecture) does not have RT cores, so full Kit RTX rendering is not available. Tutorials 06-08 use USD-only APIs to simulate Kit concepts. In an RTX GPU environment, the same concepts apply directly using `omni.kit.*` APIs.
 
 ### Set 3: PhysicsNeMo Integration (09-11)
 
-This set covers the pipeline for converting outputs from PhysicsNeMo models (learned in `E:\physicsnemo_env`) into USD 3D scenes.
+This set covers the pipeline for converting outputs from PhysicsNeMo models (learned in `YOUR_DIRECTORY\physicsnemo_env`) into USD 3D scenes.
 
 - **Scalar field → point cloud**: Represent 2D simulation results as colored spheres
 - **Height field**: Map scalar values to 3D heights for intuitive visualization
@@ -145,7 +145,7 @@ This set covers the pipeline for converting outputs from PhysicsNeMo models (lea
 ### PhysicsNeMo ↔ Omniverse Data Exchange
 
 ```
-E:\physicsnemo_env\              E:\omniverse_env\
+YOUR_DIRECTORY\physicsnemo_env\              YOUR_DIRECTORY\omniverse_env\
   (Python 3.10, PyTorch)           (Python 3.8, USD)
         │                                │
         │  Model inference results (.npy/.json)
@@ -186,7 +186,7 @@ tutorials\output\
 `.usda` files are in ASCII text format and can be opened with Notepad:
 
 ```batch
-notepad E:\omniverse_env\tutorials\output\01_usd_basics.usda
+notepad YOUR_DIRECTORY\omniverse_env\tutorials\output\01_usd_basics.usda
 ```
 
 ---
@@ -208,7 +208,7 @@ notepad E:\omniverse_env\tutorials\output\01_usd_basics.usda
 
 After completing this tutorial set:
 
-1. **Real PhysicsNeMo Model Integration**: Save inference results from models trained in `E:\physicsnemo_env` as `.npy` files, then load and convert them to USD in `E:\omniverse_env`
+1. **Real PhysicsNeMo Model Integration**: Save inference results from models trained in `YOUR_DIRECTORY\physicsnemo_env` as `.npy` files, then load and convert them to USD in `YOUR_DIRECTORY\omniverse_env`
 2. **Omniverse Installation**: Install Omniverse Kit on a system with an RTX GPU and open the learned USD files in Kit
 3. **Nucleus Server**: Set up a Nucleus server to test Live Sync in practice
 4. **Custom Extension Development**: Develop your own Kit extensions based on the patterns from tutorial 06

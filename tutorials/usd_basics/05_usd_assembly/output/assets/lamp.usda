@@ -1,0 +1,16 @@
+#usda 1.0
+(
+    defaultPrim = "Lamp"
+    metersPerUnit = 0.01
+    upAxis = "Y"
+)
+
+def Cone "Lamp"
+{
+    double height = 0.8
+    color3f[] primvars:displayColor = [(1, 1, 0.8)]
+    double radius = 0.5
+    double3 xformOp:translate = (0, 2, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate"]
+}
+

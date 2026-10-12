@@ -1,0 +1,30 @@
+# ============================================================================
+# extension.toml - Omniverse Kit Extension Configuration
+# ============================================================================
+# This file declares the extension's metadata and entry points.
+# Kit reads this file to load and manage the extension.
+# ============================================================================
+
+# Unique extension identifier (org.module.name format)
+[package]
+version = "1.0.0"
+description = "A sample extension for learning Omniverse Kit"
+
+# Core extension settings
+[core]
+reloadable = true  # Whether the extension can be hot-reloaded
+
+# Python module settings
+# Kit will import this module and call its lifecycle functions
+[[python.module]]
+name = "my_extension"
+
+# Extension dependencies
+# These extensions must be loaded before this one
+[[dependencies]]
+name = "omni.usd"
+version = "*"  # Any version
+
+[[dependencies]]
+name = "omni.kit.app"
+version = "*"

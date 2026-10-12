@@ -1,0 +1,151 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 0.01
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Cube "RedCube"
+    {
+        color3f[] primvars:displayColor = [(1, 0, 0)]
+        double size = 1.5
+    }
+
+    def Cube "GreenCube"
+    {
+        color3f[] primvars:displayColor = [(0, 1, 0)]
+        double size = 1.5
+    }
+
+    def Cube "BlueCube"
+    {
+        color3f[] primvars:displayColor = [(0, 0, 1)]
+        double size = 1.5
+    }
+
+    def Cube "YellowCube"
+    {
+        color3f[] primvars:displayColor = [(1, 1, 0)]
+        double size = 1.5
+    }
+
+    def Cube "PurpleCube"
+    {
+        color3f[] primvars:displayColor = [(0.5, 0, 0.5)]
+        double size = 1.5
+    }
+
+    def "Materials"
+    {
+        def Material "RedMetal"
+        {
+            token outputs:surface.connect = </World/Materials/RedMetal/Shader.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.8, 0.1, 0.1)
+                float inputs:metallic = 0.8
+                float inputs:roughness = 0.3
+                token outputs:surface
+            }
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.8, 0.1, 0.1)
+                float inputs:metallic = 0.8
+                float inputs:roughness = 0.3
+                token outputs:surface
+            }
+        }
+
+        def Material "BluePlastic"
+        {
+            token outputs:surface.connect = </World/Materials/BluePlastic/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.1, 0.2, 0.8)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.5
+                token outputs:surface
+            }
+        }
+
+        def Material "GoldMetal"
+        {
+            token outputs:surface.connect = </World/Materials/GoldMetal/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 0.7, 0.3)
+                float inputs:metallic = 1
+                float inputs:roughness = 0.2
+                token outputs:surface
+            }
+        }
+
+        def Material "MatteWhite"
+        {
+            token outputs:surface.connect = </World/Materials/MatteWhite/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.9, 0.9, 0.9)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.9
+                token outputs:surface
+            }
+        }
+    }
+
+    def "MaterialDemo"
+    {
+        def Sphere "RedMetal_Sphere" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </World/Materials/RedMetal>
+            double radius = 1
+            double3 xformOp:translate = (-6, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "BluePlastic_Sphere" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </World/Materials/BluePlastic>
+            double radius = 1
+            double3 xformOp:translate = (-3, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "GoldMetal_Sphere" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </World/Materials/GoldMetal>
+            double radius = 1
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "MatteWhite_Sphere" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </World/Materials/MatteWhite>
+            double radius = 1
+            double3 xformOp:translate = (3, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+    }
+}
+

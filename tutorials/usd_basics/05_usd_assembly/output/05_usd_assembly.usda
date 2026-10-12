@@ -1,0 +1,172 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 0.01
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Xform "Room"
+    {
+        def Xform "Table" (
+            prepend references = @E:\omniverse_env\tutorials\usd_basics\05_usd_assembly\output\assets\table.usda@
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Chair_N" (
+            prepend references = @E:\omniverse_env\tutorials\usd_basics\05_usd_assembly\output\assets\chair.usda@
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, -3, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Chair_S" (
+            prepend references = @E:\omniverse_env\tutorials\usd_basics\05_usd_assembly\output\assets\chair.usda@
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 3, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Chair_E" (
+            prepend references = @E:\omniverse_env\tutorials\usd_basics\05_usd_assembly\output\assets\chair.usda@
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (3, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Chair_W" (
+            prepend references = @E:\omniverse_env\tutorials\usd_basics\05_usd_assembly\output\assets\chair.usda@
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-3, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Lamp" (
+            prepend references = @E:\omniverse_env\tutorials\usd_basics\05_usd_assembly\output\assets\lamp.usda@
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 1.5, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+
+    def Cube "VariantCube" (
+        variants = {
+            string Color = "Red"
+        }
+        prepend variantSets = "Color"
+    )
+    {
+        double size = 2
+        double3 xformOp:translate = (8, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+        variantSet "Color" = {
+            "Blue" {
+                color3f[] primvars:displayColor = [(0, 0, 1)]
+
+            }
+            "Green" {
+                color3f[] primvars:displayColor = [(0, 1, 0)]
+
+            }
+            "Red" {
+                color3f[] primvars:displayColor = [(1, 0, 0)]
+
+            }
+        }
+    }
+
+    def Sphere "InstancedColumn" (
+        instanceable = true
+    )
+    {
+        color3f[] primvars:displayColor = [(0.7, 0.7, 0.7)]
+        double radius = 0.3
+        double3 xformOp:translate = (0, 1, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def "Columns"
+    {
+        def Xform "Column_0_0" (
+            prepend references = </World/InstancedColumn>
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-2, 0, -2, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Column_0_1" (
+            prepend references = </World/InstancedColumn>
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-2, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Column_0_2" (
+            prepend references = </World/InstancedColumn>
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (-2, 0, 2, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Column_1_0" (
+            prepend references = </World/InstancedColumn>
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, -2, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Column_1_1" (
+            prepend references = </World/InstancedColumn>
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Column_1_2" (
+            prepend references = </World/InstancedColumn>
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 2, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Column_2_0" (
+            prepend references = </World/InstancedColumn>
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (2, 0, -2, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Column_2_1" (
+            prepend references = </World/InstancedColumn>
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (2, 0, 0, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def Xform "Column_2_2" (
+            prepend references = </World/InstancedColumn>
+        )
+        {
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (2, 0, 2, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+    }
+}
+

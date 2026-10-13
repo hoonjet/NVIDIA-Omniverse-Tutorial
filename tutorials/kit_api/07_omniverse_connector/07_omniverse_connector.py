@@ -57,9 +57,9 @@ def create_sample_csv(filepath):
         # Write header
         writer.writerow(["x", "y", "z", "temperature"])
 
-        # Generate 100 points in a spiral pattern
-        for i in range(100):
-            t = i * 0.1  # Parameter
+        # Generate 20 points in a spiral pattern
+        for i in range(20):
+            t = i * 0.5  # Parameter (wider step for 20 points)
             x = 5.0 * math.cos(t)
             z = 5.0 * math.sin(t)
             y = t * 0.3  # Spiral upward
@@ -67,7 +67,7 @@ def create_sample_csv(filepath):
             temp = 20.0 + y * 5.0
             writer.writerow([f"{x:.4f}", f"{y:.4f}", f"{z:.4f}", f"{temp:.2f}"])
 
-    print(f"  [+] Created sample CSV: {filepath} (100 points)")
+    print(f"  [+] Created sample CSV: {filepath} (20 points)")
 
 
 def csv_to_usd_connector(csv_filepath, stage, parent_path="/World/PointCloud"):

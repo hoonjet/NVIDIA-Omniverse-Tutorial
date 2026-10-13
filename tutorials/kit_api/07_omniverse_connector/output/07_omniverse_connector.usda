@@ -1,0 +1,273 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 0.01
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Xform "CSV_Points"
+    {
+        def Sphere "Point_0000"
+        {
+            custom float data:temperature = 20
+            color3f[] primvars:displayColor = [(0, 0, 1)]
+            double radius = 0.1
+            double3 xformOp:translate = (5, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0001"
+        {
+            custom float data:temperature = 20.15
+            color3f[] primvars:displayColor = [(0, 0.02020202, 0.97979796)]
+            double radius = 0.1
+            double3 xformOp:translate = (4.975, 0.03, 0.4992)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0002"
+        {
+            custom float data:temperature = 20.3
+            color3f[] primvars:displayColor = [(0, 0.04040404, 0.959596)]
+            double radius = 0.1
+            double3 xformOp:translate = (4.9003, 0.06, 0.9933)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0003"
+        {
+            custom float data:temperature = 20.45
+            color3f[] primvars:displayColor = [(0, 0.060606062, 0.93939394)]
+            double radius = 0.1
+            double3 xformOp:translate = (4.7767, 0.09, 1.4776)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0004"
+        {
+            custom float data:temperature = 20.6
+            color3f[] primvars:displayColor = [(0, 0.08080808, 0.9191919)]
+            double radius = 0.1
+            double3 xformOp:translate = (4.6053, 0.12, 1.9471)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0005"
+        {
+            custom float data:temperature = 20.75
+            color3f[] primvars:displayColor = [(0, 0.1010101, 0.8989899)]
+            double radius = 0.1
+            double3 xformOp:translate = (4.3879, 0.15, 2.3971)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0006"
+        {
+            custom float data:temperature = 20.9
+            color3f[] primvars:displayColor = [(0, 0.121212125, 0.8787879)]
+            double radius = 0.1
+            double3 xformOp:translate = (4.1267, 0.18, 2.8232)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0007"
+        {
+            custom float data:temperature = 21.05
+            color3f[] primvars:displayColor = [(0, 0.14141414, 0.85858583)]
+            double radius = 0.1
+            double3 xformOp:translate = (3.8242, 0.21, 3.2211)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0008"
+        {
+            custom float data:temperature = 21.2
+            color3f[] primvars:displayColor = [(0, 0.16161616, 0.83838385)]
+            double radius = 0.1
+            double3 xformOp:translate = (3.4835, 0.24, 3.5868)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0009"
+        {
+            custom float data:temperature = 21.35
+            color3f[] primvars:displayColor = [(0, 0.18181819, 0.8181818)]
+            double radius = 0.1
+            double3 xformOp:translate = (3.108, 0.27, 3.9166)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0010"
+        {
+            custom float data:temperature = 21.5
+            color3f[] primvars:displayColor = [(0, 0.2020202, 0.7979798)]
+            double radius = 0.1
+            double3 xformOp:translate = (2.7015, 0.3, 4.2074)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0011"
+        {
+            custom float data:temperature = 21.65
+            color3f[] primvars:displayColor = [(0, 0.22222222, 0.7777778)]
+            double radius = 0.1
+            double3 xformOp:translate = (2.268, 0.33, 4.456)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0012"
+        {
+            custom float data:temperature = 21.8
+            color3f[] primvars:displayColor = [(0, 0.24242425, 0.75757575)]
+            double radius = 0.1
+            double3 xformOp:translate = (1.8118, 0.36, 4.6602)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0013"
+        {
+            custom float data:temperature = 21.95
+            color3f[] primvars:displayColor = [(0, 0.26262626, 0.7373737)]
+            double radius = 0.1
+            double3 xformOp:translate = (1.3375, 0.39, 4.8178)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0014"
+        {
+            custom float data:temperature = 22.1
+            color3f[] primvars:displayColor = [(0, 0.28282827, 0.7171717)]
+            double radius = 0.1
+            double3 xformOp:translate = (0.8498, 0.42, 4.9272)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0015"
+        {
+            custom float data:temperature = 22.25
+            color3f[] primvars:displayColor = [(0, 0.3030303, 0.6969697)]
+            double radius = 0.1
+            double3 xformOp:translate = (0.3537, 0.45, 4.9875)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0016"
+        {
+            custom float data:temperature = 22.4
+            color3f[] primvars:displayColor = [(0, 0.32323232, 0.67676765)]
+            double radius = 0.1
+            double3 xformOp:translate = (-0.146, 0.48, 4.9979)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0017"
+        {
+            custom float data:temperature = 22.55
+            color3f[] primvars:displayColor = [(0, 0.34343433, 0.65656567)]
+            double radius = 0.1
+            double3 xformOp:translate = (-0.6442, 0.51, 4.9583)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0018"
+        {
+            custom float data:temperature = 22.7
+            color3f[] primvars:displayColor = [(0, 0.36363637, 0.6363636)]
+            double radius = 0.1
+            double3 xformOp:translate = (-1.136, 0.54, 4.8692)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0019"
+        {
+            custom float data:temperature = 22.85
+            color3f[] primvars:displayColor = [(0, 0.3838384, 0.61616164)]
+            double radius = 0.1
+            double3 xformOp:translate = (-1.6164, 0.57, 4.7315)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0020"
+        {
+            custom float data:temperature = 23
+            color3f[] primvars:displayColor = [(0, 0.4040404, 0.5959596)]
+            double radius = 0.1
+            double3 xformOp:translate = (-2.0807, 0.6, 4.5465)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0021"
+        {
+            custom float data:temperature = 23.15
+            color3f[] primvars:displayColor = [(0, 0.42424244, 0.57575756)]
+            double radius = 0.1
+            double3 xformOp:translate = (-2.5242, 0.63, 4.316)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0022"
+        {
+            custom float data:temperature = 23.3
+            color3f[] primvars:displayColor = [(0, 0.44444445, 0.5555556)]
+            double radius = 0.1
+            double3 xformOp:translate = (-2.9425, 0.66, 4.0425)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0023"
+        {
+            custom float data:temperature = 23.45
+            color3f[] primvars:displayColor = [(0, 0.46464646, 0.53535354)]
+            double radius = 0.1
+            double3 xformOp:translate = (-3.3314, 0.69, 3.7285)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0024"
+        {
+            custom float data:temperature = 23.6
+            color3f[] primvars:displayColor = [(0, 0.4848485, 0.5151515)]
+            double radius = 0.1
+            double3 xformOp:translate = (-3.687, 0.72, 3.3773)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0025"
+        {
+            custom float data:temperature = 23.75
+            color3f[] primvars:displayColor = [(0, 0.5050505, 0.4949495)]
+            double radius = 0.1
+            double3 xformOp:translate = (-4.0057, 0.75, 2.9924)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0026"
+        {
+            custom float data:temperature = 23.9
+            color3f[] primvars:displayColor = [(0, 0.5252525, 0.47474748)]
+            double radius = 0.1
+            double3 xformOp:translate = (-4.2844, 0.78, 2.5775)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0027"
+        {
+            custom float data:temperature = 24.05
+            color3f[] primvars:displayColor = [(0, 0.54545456, 0.45454547)]
+            double radius = 0.1
+            double3 xformOp:translate = (-4.5204, 0.81, 2.1369)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Sphere "Point_0028"
+        {
+            custom float data:temperature = 24.2
+            color3f[] primvars:displayColor = [(0, 0.56565654, 0.43434343)]
+            double radius = 0.1
+            double3 xformOp:translate = (-4.7111, 0.84, 1.6749)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+     

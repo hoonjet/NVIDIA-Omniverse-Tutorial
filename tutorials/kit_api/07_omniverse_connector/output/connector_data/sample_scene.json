@@ -1,0 +1,105 @@
+{
+  "name": "FactoryFloor",
+  "type": "Xform",
+  "children": [
+    {
+      "name": "Machine1",
+      "type": "Cube",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": 3.0,
+      "color": [
+        0.8,
+        0.2,
+        0.2
+      ],
+      "metadata": {
+        "manufacturer": "ACME",
+        "model": "X-100"
+      }
+    },
+    {
+      "name": "Machine2",
+      "type": "Cube",
+      "position": [
+        5.0,
+        0.0,
+        0.0
+      ],
+      "size": 2.5,
+      "color": [
+        0.2,
+        0.8,
+        0.2
+      ],
+      "metadata": {
+        "manufacturer": "ACME",
+        "model": "X-200"
+      }
+    },
+    {
+      "name": "StorageTank",
+      "type": "Cylinder",
+      "position": [
+        -5.0,
+        0.0,
+        0.0
+      ],
+      "height": 4.0,
+      "radius": 1.5,
+      "color": [
+        0.2,
+        0.2,
+        0.8
+      ],
+      "metadata": {
+        "capacity_liters": 5000,
+        "contents": "Water"
+      }
+    },
+    {
+      "name": "ControlRoom",
+      "type": "Xform",
+      "position": [
+        0.0,
+        0.0,
+        8.0
+      ],
+      "children": [
+        {
+          "name": "Desk",
+          "type": "Cube",
+          "position": [
+            0.0,
+            0.5,
+            0.0
+          ],
+          "size": 1.5,
+          "color": [
+            0.6,
+            0.4,
+            0.2
+          ]
+        },
+        {
+          "name": "Monitor",
+          "type": "Cube",
+          "position": [
+            0.0,
+            1.2,
+            0.0
+          ],
+          "size": 0.5,
+          "color": [
+            0.1,
+            0.1,
+            0.1
+          ]
+        }
+      ]
+    }
+  ]
+}

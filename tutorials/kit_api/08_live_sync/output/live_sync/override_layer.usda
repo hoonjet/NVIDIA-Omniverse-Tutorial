@@ -1,0 +1,17 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    upAxis = "Y"
+)
+
+def Xform "World" (
+    prepend references = @E:\omniverse_env\tutorials\kit_api\08_live_sync\output\live_sync\base_layer.usda@
+)
+{
+    over "Cube"
+    {
+        custom color3f[] primvars:displayColor = [(0, 0, 1)]
+        custom double size = 5
+    }
+}
+

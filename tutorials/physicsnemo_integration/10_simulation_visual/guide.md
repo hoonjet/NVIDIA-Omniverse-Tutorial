@@ -17,7 +17,7 @@ and vector fields.
 - Complete **Tutorials 01–09** first (especially 09).
 - Activate the virtual environment:
   ```batch
-  cd E:\omniverse_env
+  cd YOUR_DIRECTORY\omniverse_env
   Scripts\activate
   ```
 - `numpy` installed: `pip install numpy`.
@@ -25,7 +25,7 @@ and vector fields.
 ## How to Run
 
 ```batch
-cd E:\omniverse_env
+cd YOUR_DIRECTORY\omniverse_env
 Scripts\activate
 python tutorials\physicsnemo_integration\10_simulation_visual\10_simulation_visual.py
 ```
@@ -83,6 +83,3 @@ tutorials\physicsnemo_integration\10_simulation_visual\output\
 | Animation static in viewer | Timeline not set, or no time samples written | Confirm `stage.SetStartTimeCode`/`SetEndTimeCode` and per-frame `.Set(..., time=...)` |
 | Colors don't vary with heat | Color array not recomputed per timestep | Generate a fresh color array for each `t` from the field |
 
-## Next Steps
-
-Continue to **Tutorial 11: Digital Twin**.

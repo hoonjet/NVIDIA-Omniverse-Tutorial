@@ -1,0 +1,369 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 0.01
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Xform "DarcyFlow"
+    {
+        def Xform "pressure_points"
+        {
+            def Sphere "P_000_000"
+            {
+                custom float data:pressure = 1
+                color3f[] primvars:displayColor = [(1, 0, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_000_001"
+            {
+                custom float data:pressure = 1
+                color3f[] primvars:displayColor = [(1, 0, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (0, 0, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_000_002"
+            {
+                custom float data:pressure = 1
+                color3f[] primvars:displayColor = [(1, 0, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (0, 0, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_001_000"
+            {
+                custom float data:pressure = 0.6666667
+                color3f[] primvars:displayColor = [(0.6666667, 1, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (3.333333333333333, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_001_001"
+            {
+                custom float data:pressure = 0.6666667
+                color3f[] primvars:displayColor = [(0.6666667, 1, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (3.333333333333333, 0, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_001_002"
+            {
+                custom float data:pressure = 0.6666667
+                color3f[] primvars:displayColor = [(0.6666667, 1, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (3.333333333333333, 0, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_002_000"
+            {
+                custom float data:pressure = 0.33333334
+                color3f[] primvars:displayColor = [(0, 1, 0.6666667)]
+                double radius = 0.15
+                double3 xformOp:translate = (6.666666666666666, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_002_001"
+            {
+                custom float data:pressure = 0.33333334
+                color3f[] primvars:displayColor = [(0, 1, 0.6666667)]
+                double radius = 0.15
+                double3 xformOp:translate = (6.666666666666666, 0, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_002_002"
+            {
+                custom float data:pressure = 0.33333334
+                color3f[] primvars:displayColor = [(0, 1, 0.6666667)]
+                double radius = 0.15
+                double3 xformOp:translate = (6.666666666666666, 0, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_003_000"
+            {
+                custom float data:pressure = 0
+                color3f[] primvars:displayColor = [(0, 1.9594348e-16, 1)]
+                double radius = 0.15
+                double3 xformOp:translate = (10, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_003_001"
+            {
+                custom float data:pressure = 2.4492935e-17
+                color3f[] primvars:displayColor = [(0, 2.9391524e-16, 1)]
+                double radius = 0.15
+                double3 xformOp:translate = (10, 0, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_003_002"
+            {
+                custom float data:pressure = -4.898587e-17
+                color3f[] primvars:displayColor = [(0, 0, 1)]
+                double radius = 0.15
+                double3 xformOp:translate = (10, 0, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+        }
+
+        def Xform "pressure_heightfield"
+        {
+            def Cylinder "H_000_000"
+            {
+                custom float data:pressure = 1
+                double height = 5
+                color3f[] primvars:displayColor = [(1, 0, 0)]
+                double radius = 0.2
+                double3 xformOp:translate = (0, 2.5, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "H_000_001"
+            {
+                custom float data:pressure = 1
+                double height = 5
+                color3f[] primvars:displayColor = [(1, 0, 0)]
+                double radius = 0.2
+                double3 xformOp:translate = (0, 2.5, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "H_000_002"
+            {
+                custom float data:pressure = 1
+                double height = 5
+                color3f[] primvars:displayColor = [(1, 0, 0)]
+                double radius = 0.2
+                double3 xformOp:translate = (0, 2.5, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "H_001_000"
+            {
+                custom float data:pressure = 0.6666667
+                double height = 3.333333333333334
+                color3f[] primvars:displayColor = [(0.6666667, 1, 0)]
+                double radius = 0.2
+                double3 xformOp:translate = (3.333333333333333, 1.666666666666667, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "H_001_001"
+            {
+                custom float data:pressure = 0.6666667
+                double height = 3.333333333333334
+                color3f[] primvars:displayColor = [(0.6666667, 1, 0)]
+                double radius = 0.2
+                double3 xformOp:translate = (3.333333333333333, 1.666666666666667, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "H_001_002"
+            {
+                custom float data:pressure = 0.6666667
+                double height = 3.333333333333334
+                color3f[] primvars:displayColor = [(0.6666667, 1, 0)]
+                double radius = 0.2
+                double3 xformOp:translate = (3.333333333333333, 1.666666666666667, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "H_002_000"
+            {
+                custom float data:pressure = 0.33333334
+                double height = 1.6666666666666672
+                color3f[] primvars:displayColor = [(0, 1, 0.6666667)]
+                double radius = 0.2
+                double3 xformOp:translate = (6.666666666666666, 0.8333333333333336, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "H_002_001"
+            {
+                custom float data:pressure = 0.33333334
+                double height = 1.6666666666666672
+                color3f[] primvars:displayColor = [(0, 1, 0.6666667)]
+                double radius = 0.2
+                double3 xformOp:translate = (6.666666666666666, 0.8333333333333336, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "H_002_002"
+            {
+                custom float data:pressure = 0.33333334
+                double height = 1.666666666666667
+                color3f[] primvars:displayColor = [(0, 1, 0.6666667)]
+                double radius = 0.2
+                double3 xformOp:translate = (6.666666666666666, 0.8333333333333335, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "H_003_000"
+            {
+                custom float data:pressure = 0
+                double height = 0.01
+                color3f[] primvars:displayColor = [(0, 1.9594348e-16, 1)]
+                double radius = 0.2
+                double3 xformOp:translate = (10, 1.2246467991473532e-16, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "H_003_001"
+            {
+                custom float data:pressure = 2.4492935e-17
+                double height = 0.01
+                color3f[] primvars:displayColor = [(0, 2.9391524e-16, 1)]
+                double radius = 0.2
+                double3 xformOp:translate = (10, 1.8369701987210302e-16, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Cylinder "H_003_002"
+            {
+                custom float data:pressure = -4.898587e-17
+                double height = 0.01
+                color3f[] primvars:displayColor = [(0, 0, 1)]
+                double radius = 0.2
+                double3 xformOp:translate = (10, 0, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+        }
+
+        def Xform "velocity_mag_points"
+        {
+            def Sphere "P_000_000"
+            {
+                custom float data:velocity_mag = 0
+                color3f[] primvars:displayColor = [(0, 0, 1)]
+                double radius = 0.15
+                double3 xformOp:translate = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_000_001"
+            {
+                custom float data:velocity_mag = 0
+                color3f[] primvars:displayColor = [(0, 0, 1)]
+                double radius = 0.15
+                double3 xformOp:translate = (0, 0, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_000_002"
+            {
+                custom float data:velocity_mag = 0
+                color3f[] primvars:displayColor = [(0, 0, 1)]
+                double radius = 0.15
+                double3 xformOp:translate = (0, 0, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_001_000"
+            {
+                custom float data:velocity_mag = 1
+                color3f[] primvars:displayColor = [(1, 8.881784e-16, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (3.333333333333333, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_001_001"
+            {
+                custom float data:velocity_mag = 1
+                color3f[] primvars:displayColor = [(1, 8.881784e-16, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (3.333333333333333, 0, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_001_002"
+            {
+                custom float data:velocity_mag = 1
+                color3f[] primvars:displayColor = [(1, 0, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (3.333333333333333, 0, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_002_000"
+            {
+                custom float data:velocity_mag = 1
+                color3f[] primvars:displayColor = [(1, 0, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (6.666666666666666, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_002_001"
+            {
+                custom float data:velocity_mag = 1
+                color3f[] primvars:displayColor = [(1, 0, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (6.666666666666666, 0, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_002_002"
+            {
+                custom float data:velocity_mag = 1
+                color3f[] primvars:displayColor = [(1, 0, 0)]
+                double radius = 0.15
+                double3 xformOp:translate = (6.666666666666666, 0, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_003_000"
+            {
+                custom float data:velocity_mag = 0
+                color3f[] primvars:displayColor = [(0, 0, 1)]
+                double radius = 0.15
+                double3 xformOp:translate = (10, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_003_001"
+            {
+                custom float data:velocity_mag = 4.898587e-17
+                color3f[] primvars:displayColor = [(0, 1.9594348e-16, 1)]
+                double radius = 0.15
+                double3 xformOp:translate = (10, 0, 5)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+
+            def Sphere "P_003_002"
+            {
+                custom float data:velocity_mag = 0
+                color3f[] primvars:displayColor = [(0, 0, 1)]
+                double radius = 0.15
+                double3 xformOp:translate = (10, 0, 10)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+        }
+
+        def Xform "SimulationMetadata"
+        {
+            custom string sim:domain = "[0.0, 1.0, 0.0, 1.0]"
+            custom string sim:equation = "-div(K * grad(p)) = f"
+            custom string sim:grid_size = "[4, 3]"
+            custom string sim:model = "PhysicsNeMo (simulated)"
+            custom float sim:permeability = 1
+            custom string sim:simulation_type = "darcy_flow"
+            custom string sim:source = "synthetic_analytical"
+        }
+    }
+}
+

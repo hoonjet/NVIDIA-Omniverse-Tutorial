@@ -38,7 +38,7 @@ import numpy as np
 # Part 1: Generating Time-Varying Simulation Data
 # ==============================================================================
 
-def generate_transient_data(nx=10, ny=10, num_timesteps=10):
+def generate_transient_data(nx=3, ny=2, num_timesteps=3):
     """
     Generate time-varying (transient) simulation data.
 
@@ -387,15 +387,17 @@ def verify_animation(stage, data, start_frame=1, fps=12):
     """
     print("\n--- Verifying Animation ---")
 
-    # Read temperature at a specific grid point across all timesteps
-    point_path = "/World/TransientSim/TemperatureMap/T_005_005"
+    # Read temperature at a central grid point across all timesteps
+    nx_mid = len(data["x"]) // 2
+    ny_mid = len(data["y"]) // 2
+    point_path = f"/World/TransientSim/TemperatureMap/T_{nx_mid:03d}_{ny_mid:03d}"
     prim = stage.GetPrimAtPath(point_path)
 
     if prim.IsValid():
         color_attr = prim.GetAttribute("primvars:displayColor")
         temp_attr = prim.GetAttribute("data:temperature")
 
-        print(f"  Grid point (5,5) across timesteps:")
+        print(f"  Grid point ({nx_mid},{ny_mid}) across timesteps:")
         for t in range(data["num_timesteps"]):
             frame = start_frame + t * fps
             color = color_attr.Get(frame)
@@ -421,7 +423,7 @@ def main():
 
     # Step 1: Generate transient data
     print("\n--- Step 1: Generating Transient Data ---")
-    data = generate_transient_data(nx=10, ny=10, num_timesteps=10)
+    data = generate_transient_data(nx=3, ny=2, num_timesteps=3)
 
     # Step 2: Create USD stage
     print("\n--- Step 2: Creating USD Scene ---")

@@ -1,0 +1,40 @@
+============================================================
+Digital Twin Simulation Report
+Heat Exchanger System
+============================================================
+
+System: heat_exchanger
+Model: PhysicsNeMo (simulated)
+Fluid: water
+Material: stainless_steel
+
+Inlet Temperature: 20.0 C
+Target Outlet Temperature: 80.0 C
+Final Outlet Temperature: 77.0 C
+
+Temperature Profile Over Time:
+Timestep |  Outlet Temp | Shell Bottom |  Shell Top
+--------------------------------------------------
+       0 |       20.0C |       20.0C |     20.0C
+       1 |       28.8C |       20.0C |     28.8C
+       2 |       36.2C |       20.0C |     36.2C
+       3 |       42.6C |       20.0C |     42.6C
+       4 |       48.1C |       20.0C |     48.1C
+       5 |       52.8C |       20.0C |     52.8C
+       6 |       56.7C |       20.0C |     56.7C
+       7 |       60.1C |       20.0C |     60.1C
+       8 |       63.0C |       20.0C |     63.0C
+       9 |       65.5C |       20.0C |     65.5C
+      10 |       67.6C |       20.0C |     67.6C
+      11 |       69.4C |       20.0C |     69.4C
+      12 |       71.0C |       20.0C |     71.0C
+      13 |       72.3C |       20.0C |     72.3C
+      14 |       73.4C |       20.0C |     73.4C
+      15 |       74.4C |       20.0C |     74.4C
+      16 |       75.2C |       20.0C |     75.2C
+      17 |       75.9C |       20.0C |     75.9C
+      18 |       76.5C |       20.0C |     76.5C
+      19 |       77.0C |       20.0C |     77.0C
+
+============================================================
+End of Report

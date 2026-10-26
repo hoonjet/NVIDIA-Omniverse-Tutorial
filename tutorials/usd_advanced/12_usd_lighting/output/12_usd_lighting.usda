@@ -1,0 +1,157 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Plane "Floor"
+    {
+        uniform token axis = "Y"
+        double length = 20
+        rel material:binding = </World/Materials/FloorMat>
+        double width = 20
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Cube "Cube"
+    {
+        rel material:binding = </World/Materials/CubeMat>
+        double size = 2
+        double3 xformOp:translate = (-2.5, 1, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Sphere "Sphere"
+    {
+        rel material:binding = </World/Materials/SphereMat>
+        double radius = 1.2
+        double3 xformOp:translate = (2.5, 1.2, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def "Materials"
+    {
+        def Material "FloorMat"
+        {
+            token outputs:surface.connect = </World/Materials/FloorMat/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.4, 0.4, 0.45)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.8
+                token outputs:surface
+            }
+        }
+
+        def Material "CubeMat"
+        {
+            token outputs:surface.connect = </World/Materials/CubeMat/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.8, 0.2, 0.2)
+                float inputs:metallic = 0.1
+                float inputs:roughness = 0.4
+                token outputs:surface
+            }
+        }
+
+        def Material "SphereMat"
+        {
+            token outputs:surface.connect = </World/Materials/SphereMat/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.2, 0.5, 0.9)
+                float inputs:metallic = 0.7
+                float inputs:roughness = 0.3
+                token outputs:surface
+            }
+        }
+    }
+
+    def Camera "Camera"
+    {
+        float2 clippingRange = (0.1, 100)
+        float focalLength = 50
+        float horizontalAperture = 20.955
+        token projection = "perspective"
+        float verticalAperture = 15.2908
+        float xformOp:rotateX = -15
+        double3 xformOp:translate = (0, 4, 12)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateX"]
+    }
+
+    def "Lights"
+    {
+        def DistantLight "SunLight" (
+            prepend apiSchemas = ["ShadowAPI"]
+        )
+        {
+            float inputs:angle = 0.53
+            color3f inputs:color = (1, 0.95, 0.85)
+            float inputs:colorTemperature = 5500
+            bool inputs:enableColorTemperature = 1
+            float inputs:intensity = 2
+            color3f inputs:shadow:color = (0, 0, 0)
+            float inputs:shadow:distance = 0
+            bool inputs:shadow:enable = 1
+            float xformOp:rotateX = -55
+            float xformOp:rotateZ = 45
+            uniform token[] xformOpOrder = ["xformOp:rotateZ", "xformOp:rotateX"]
+        }
+
+        def DomeLight "SkyLight"
+        {
+            float guideRadius = 1
+            color3f inputs:color = (0.6, 0.75, 1)
+            float inputs:intensity = 1
+            asset inputs:texture:file = @@
+        }
+
+        def RectLight "StudioPanel"
+        {
+            color3f inputs:color = (1, 1, 1)
+            float inputs:colorTemperature = 6500
+            bool inputs:enableColorTemperature = 1
+            float inputs:height = 2
+            float inputs:intensity = 5
+            float inputs:width = 4
+            prepend rel light:filters = </World/Lights/Filters/TintFilter>
+            float xformOp:rotateX = 90
+            double3 xformOp:translate = (0, 6, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateX"]
+        }
+
+        def SphereLight "Bulb"
+        {
+            color3f inputs:color = (1, 0.8, 0.5)
+            float inputs:intensity = 50
+            bool inputs:normalize = 1
+            float inputs:radius = 0.3
+            double3 xformOp:translate = (2.5, 3, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def "Filters"
+        {
+            def LightFilter "TintFilter"
+            {
+                def Shader "FilterShader"
+                {
+                    uniform token info:id = "UsdLuxTintFilterColorOpacity"
+                    color3f inputs:tint = (1, 0.9, 0.85)
+                }
+            }
+        }
+    }
+}
+

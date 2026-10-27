@@ -1,0 +1,144 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def PhysicsScene "PhysicsScene"
+    {
+        vector3f physics:gravityDirection = (0, -1, 0)
+        float physics:gravityMagnitude = 9.81
+    }
+
+    def Cube "Floor" (
+        prepend apiSchemas = ["PhysicsCollisionAPI"]
+    )
+    {
+        double size = 20
+        double3 xformOp:translate = (0, -0.5, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Cube "BoxA" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsMassAPI"]
+    )
+    {
+        rel material:binding = </World/PhysicsMaterials/Grippy>
+        vector3f physics:angularVelocity = (0, 0, 0)
+        float physics:mass = 1
+        bool physics:rigidBodyEnabled = 1
+        vector3f physics:velocity = (0, 0, 0)
+        double size = 1
+        double3 xformOp:translate = (-3, 5, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Cube "BoxB" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsMassAPI"]
+    )
+    {
+        vector3f physics:angularVelocity = (0, 0, 0)
+        float physics:mass = 1
+        bool physics:rigidBodyEnabled = 1
+        vector3f physics:velocity = (0, 0, 0)
+        double size = 1
+        double3 xformOp:translate = (-1.5, 5, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Sphere "Ball" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsMassAPI"]
+    )
+    {
+        rel material:binding = </World/PhysicsMaterials/Bouncy>
+        vector3f physics:angularVelocity = (0, 0, 0)
+        float physics:mass = 0.5
+        bool physics:rigidBodyEnabled = 1
+        vector3f physics:velocity = (2, 0, 1)
+        double radius = 0.5
+        double3 xformOp:translate = (2, 8, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Cylinder "Cylinder" (
+        prepend apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI", "PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        double height = 1.5
+        uniform token physics:approximation = "convexHull"
+        float physics:mass = 2
+        bool physics:rigidBodyEnabled = 1
+        double radius = 0.4
+        double3 xformOp:translate = (4, 6, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def "PhysicsMaterials"
+    {
+        def Material "Bouncy" (
+            prepend apiSchemas = ["PhysicsMaterialAPI"]
+        )
+        {
+            float physics:dynamicFriction = 0.2
+            float physics:restitution = 0.8
+            float physics:staticFriction = 0.3
+        }
+
+        def Material "Grippy" (
+            prepend apiSchemas = ["PhysicsMaterialAPI"]
+        )
+        {
+            float physics:dynamicFriction = 0.7
+            float physics:restitution = 0.1
+            float physics:staticFriction = 0.9
+        }
+    }
+
+    def "Joints"
+    {
+        def PhysicsFixedJoint "Fixed"
+        {
+            rel physics:body0 = </World/BoxA>
+            rel physics:body1 = </World/BoxB>
+            point3f physics:localPos0 = (0.5, 0, 0)
+            point3f physics:localPos1 = (-0.5, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsRevoluteJoint "Revolute" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular"]
+        )
+        {
+            float drive:angular:physics:damping = 10
+            float drive:angular:physics:maxForce = 50
+            float drive:angular:physics:stiffness = 100
+            float drive:angular:physics:targetVelocity = 30
+            uniform token drive:angular:physics:type = "angular"
+            uniform token physics:axis = "Y"
+            rel physics:body0 = </World/Floor>
+            rel physics:body1 = </World/Pendulum>
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 1, 0)
+            float physics:lowerLimit = -90
+            float physics:upperLimit = 90
+        }
+    }
+
+    def Cube "Pendulum" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsMassAPI"]
+    )
+    {
+        vector3f physics:angularVelocity = (0, 0, 0)
+        float physics:mass = 0.3
+        bool physics:rigidBodyEnabled = 1
+        vector3f physics:velocity = (0, 0, 0)
+        double size = 1
+        double3 xformOp:translate = (6, 3, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+}
+

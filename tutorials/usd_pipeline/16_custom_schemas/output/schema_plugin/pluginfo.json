@@ -1,0 +1,21 @@
+{
+    "Plugins": [
+        {
+            "Info": {
+                "Types": {
+                    "SimulationDataAPI": {
+                        "bases": [
+                            "UsdAPISchemaBase"
+                        ],
+                        "schemaIdentifier": "SimulationDataAPI",
+                        "schemaKind": "singleApplyAPI"
+                    }
+                }
+            },
+            "LibraryPath": "",
+            "Name": "usdSimulationSchema",
+            "ResourcePath": "resources",
+            "Type": "resource"
+        }
+    ]
+}

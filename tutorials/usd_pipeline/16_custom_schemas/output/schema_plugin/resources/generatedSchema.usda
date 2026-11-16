@@ -1,0 +1,13 @@
+#usda 1.0
+(
+    rootLayerDocumentType = "Schema"
+)
+
+class SimulationDataAPI "SimulationDataAPI" (
+)
+{
+    custom double simulation:timeStep = 0.016
+    custom string simulation:solverType = "darcy"
+    custom int simulation:maxIterations = 500
+    custom point3f[] simulation:initialVelocity = []
+}

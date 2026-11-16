@@ -1,0 +1,10 @@
+#usda 1.0
+
+def Xform "Robot"
+{
+    def Cylinder "Arm"
+    {
+        string data:material = "reference:alloy-arm"
+    }
+}
+

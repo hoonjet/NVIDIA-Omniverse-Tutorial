@@ -1,0 +1,68 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    subLayers = [
+        @assets\base_layout.usda@,
+        @assets\sim_overrides.usda@
+    ]
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Sphere "LocalSphere"
+    {
+        custom string data:material = "local:red-anodized"
+        double radius = 0.5
+    }
+
+    def Sphere "InheritedSphere" (
+        prepend inherits = </_class_SharedMaterial>
+    )
+    {
+        double radius = 0.5
+    }
+
+    def Sphere "VariantSphere" (
+        variants = {
+            string finish = "glossy"
+        }
+        prepend variantSets = "finish"
+    )
+    {
+        variantSet "finish" = {
+            "glossy" {
+                custom string data:material = "variant:glossy-ceramic"
+                double radius = 0.4
+
+            }
+            "matte" {
+                custom string data:material = "variant:matte-plastic"
+                double radius = 0.25
+
+            }
+        }
+    }
+
+    def Xform "RobotRef" (
+        prepend references = @./assets/robot.usda@</Robot>
+    )
+    {
+        over "Arm"
+        {
+            string data:material = "local:painted-over-reference"
+        }
+    }
+
+    def Xform "SensorPayload" (
+        prepend payload = @./assets/sensor.usda@</Sensor>
+    )
+    {
+    }
+}
+
+class "_class_SharedMaterial"
+{
+    custom string data:material = "inherit:shared-steel"
+}
+

@@ -1,0 +1,27 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Sphere "PorousDomain" (
+        prepend apiSchemas = ["SimulationDataAPI"]
+    )
+    {
+        double radius = 1.5
+        point3f[] simulation:initialVelocity = [(0, 0, 0.1), (0, 0, 0.2)]
+        int simulation:maxIterations = 250
+        string simulation:solverType = "brinkman"
+        double simulation:timeStep = 0.004
+    }
+
+    def Cube "SecondDomain"
+    {
+        custom int simulation:maxIterations = 1000
+        custom string simulation:solverType = "darcy"
+        custom double simulation:timeStep = 0.008
+    }
+}
+

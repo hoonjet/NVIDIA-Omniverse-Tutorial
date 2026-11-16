@@ -9,7 +9,7 @@ Each tutorial is self-contained and writes its output into its own `output\` fol
 ## Directory Structure
 
 ```
-E:\omniverse_env\
+YOUR_DIRECTORY\omniverse_env\
 ├── tutorials\                       # All 14 tutorials, grouped by category
 │   ├── usd_basics\                  # Tutorial Set 1: USD fundamentals
 │   │   ├── 01_usd_basics\
@@ -28,10 +28,17 @@ E:\omniverse_env\
 │   │   ├── 09_physicsnemo_to_usd\  …
 │   │   ├── 10_simulation_visual\   …
 │   │   └── 11_digital_twin\        …
-│   └── usd_advanced\                # Tutorial Set 4: Advanced USD authoring
-│       ├── 12_usd_lighting\         …
-│       ├── 13_usd_physics\          …
-│       └── 14_skeletal_animation\   …
+│   ├── usd_advanced\                # Tutorial Set 4: Advanced USD authoring
+│   │   ├── 12_usd_lighting\         …
+│   │   ├── 13_usd_physics\          …
+│   │   └── 14_skeletal_animation\   …
+│   └── usd_pipeline\                  # Tutorial Set 5: Simulation→USD pipelines
+│       ├── 15_composition_livrps\    …
+│       ├── 16_custom_schemas\        …
+│       ├── 17_point_instancer\       …
+│       ├── 18_value_clips\           …
+│       ├── 19_volume_field\          …
+│       └── 20_physics_articulation\  …
 ├── docs\                            # Reference manuals
 │   ├── USD_Basics_Manual.md
 │   ├── Kit_API_Manual.md
@@ -42,6 +49,9 @@ E:\omniverse_env\
 │   ├── verify_all_tutorials.py      # Programmatic verification (193 checks)
 │   ├── verification_report.md       # Detailed verification report
 │   └── guide.md                     # Tool usage guide
+├── Include\                         # Python headers (venv)
+├── Lib\                             # Python packages (venv)
+├── Scripts\                         # venv executables (activate, python.exe)
 ├── test_usd_import.py               # Quick USD import sanity check
 └── pyvenv.cfg                       # Virtual environment config
 ```
@@ -62,7 +72,7 @@ Each tutorial folder follows the same layout:
 ### 1. Activate the virtual environment
 
 ```batch
-cd YOUR_DIRECTORY\
+cd YOUR_DIRECTORY\omniverse_env
 Scripts\activate
 ```
 
@@ -181,6 +191,20 @@ GPU, no renderer, no Kit runtime required.
 | 13 | [USD Physics](tutorials/usd_advanced/13_usd_physics/guide.md) | UsdPhysics, RigidBodyAPI, CollisionAPI, MassAPI, MeshCollisionAPI, joints, DriveAPI | `13_usd_physics.usda` |
 | 14 | [Skeletal Animation](tutorials/usd_advanced/14_skeletal_animation/guide.md) | UsdSkel, Skeleton, Animation, BindingAPI, BlendShape, LBS skinning | `14_skeletal_animation.usda` |
 
+### Set 5 — Simulation→USD Pipelines (`tutorials\usd_pipeline\`)
+
+Composition internals, custom schemas, instancing, value clips, volume fields,
+and articulated physics - the core USD machinery behind real simulation pipelines.
+
+| # | Tutorial | Key Topics | Output |
+|---|----------|------------|--------|
+| 15 | [Composition LIVRPS](tutorials/usd_pipeline/15_composition_livrps/guide.md) | SubLayers, References, Payloads, Variants, Inherits, Local strength ordering, ResolveInfo | `15_composition_livrps.usda` + `assets\` |
+| 16 | [Custom Schemas](tutorials/usd_pipeline/16_custom_schemas/guide.md) | Codeless API schema (plugInfo.json + generatedSchema.usda), ApplyAPI, fallback values, convention wrapper | `16_custom_schemas.usda` + `schema_plugin\` |
+| 17 | [PointInstancer](tutorials/usd_pipeline/17_point_instancer/guide.md) | 1000 instances, prototypes, protoIndices, per-instance bounds | `17_point_instancer.usda` |
+| 18 | [Value Clips](tutorials/usd_pipeline/18_value_clips/guide.md) | Time-sliced caches, template clip sets, manifest, ResolveInfoSourceValueClips | `18_value_clips.usda` + `clips\` |
+| 19 | [Volume Field](tutorials/usd_pipeline/19_volume_field/guide.md) | UsdVol.Volume, OpenVDBAsset, fields relationship, voxel PointInstancer viz | `19_volume_field.usda` |
+| 20 | [Physics Articulation](tutorials/usd_pipeline/20_physics_articulation/guide.md) | ArticulationRootAPI, kinematic base, RevoluteJoint limits, position servo DriveAPI | `20_physics_articulation.usda` |
+
 ---
 
 ## How to Read a Tutorial
@@ -198,6 +222,7 @@ and **Troubleshooting**. For deeper background, see the reference manuals in
 |-----------|------------------------|----------------------|
 | 01–05 | **Fail** with `FileExistsError` if output exists | Delete the existing `.usda` (see each guide's Notes) |
 | 06–12 | **Auto-remove** existing output before regenerating | None — safe to re-run directly |
+| 15–20 | **Auto-remove** existing output before regenerating (including `output\` subfolders) | None — safe to re-run directly |
 
 ---
 
@@ -213,7 +238,7 @@ and **Troubleshooting**. For deeper background, see the reference manuals in
 
 ## Environment
 
-- **Python:** 3.x virtual environment at `E:\omniverse_env`
+- **Python:** 3.x virtual environment at `YOUR_DIRECTORY\omniverse_env`
 - **USD:** 26.x via `usd-core` (`pip install usd-core`)
 - **PhysicsNeMo:** optional — tutorials 09–11 auto-detect and fall back to
   synthetic data when unavailable

@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    defaultPrim = "Sim"
+    endTimeCode = 4
+    startTimeCode = 0
+)
+
+def Xform "Sim" (
+    clips = {
+        dictionary default = {
+            asset manifestAssetPath = @./clips/manifest.usda@
+            string primPath = "/Sim"
+            string templateAssetPath = "./clips/sim_t.####.usd"
+            double templateEndTime = 4
+            double templateStartTime = 0
+            double templateStride = 1
+        }
+    }
+)
+{
+}
+

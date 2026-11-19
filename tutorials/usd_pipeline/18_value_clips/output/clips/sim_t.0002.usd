@@ -1,0 +1,17 @@
+#usda 1.0
+(
+    defaultPrim = "Sim"
+    startTimeCode = 0
+    endTimeCode = 0
+    timeCodesPerSecond = 24
+)
+
+def Xform "Sim"
+{
+    float data:temperature.timeSamples = {
+        0: 60.0000,
+    }
+    float data:pressure.timeSamples = {
+        0: 1.4000,
+    }
+}

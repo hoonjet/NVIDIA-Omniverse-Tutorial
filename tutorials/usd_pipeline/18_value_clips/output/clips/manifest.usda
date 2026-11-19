@@ -1,0 +1,10 @@
+#usda 1.0
+(
+    defaultPrim = "Sim"
+)
+
+def Xform "Sim"
+{
+    float data:temperature
+    float data:pressure
+}

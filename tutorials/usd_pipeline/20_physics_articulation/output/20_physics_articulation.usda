@@ -1,0 +1,115 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def PhysicsScene "PhysicsScene"
+    {
+        vector3f physics:gravityDirection = (0, -1, 0)
+        float physics:gravityMagnitude = 981
+    }
+
+    def Xform "RobotArm" (
+        prepend apiSchemas = ["PhysicsArticulationRootAPI"]
+    )
+    {
+        def Cube "Base" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI"]
+        )
+        {
+            bool physics:kinematicEnabled = 1
+            double size = 1
+            double3 xformOp:translate = (0, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Cylinder "Link1" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsMassAPI"]
+        )
+        {
+            double height = 3
+            float physics:mass = 5
+            double radius = 0.2
+            double3 xformOp:translate = (0, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Cube "Link2" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsMassAPI"]
+        )
+        {
+            float physics:mass = 3
+            double size = 2.5
+            double3 xformOp:translate = (0, 3.5, 0.5)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Cube "Link3" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsMassAPI"]
+        )
+        {
+            float physics:mass = 1.5
+            double size = 1.5
+            double3 xformOp:translate = (0, 3.5, 2.5)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def PhysicsRevoluteJoint "J1" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular"]
+        )
+        {
+            float drive:angular:physics:damping = 20
+            float drive:angular:physics:maxForce = 500
+            float drive:angular:physics:stiffness = 400
+            float drive:angular:physics:targetPosition = 30
+            uniform token drive:angular:physics:type = "angular"
+            uniform token physics:axis = "Y"
+            rel physics:body0 = </World/RobotArm/Base>
+            rel physics:body1 = </World/RobotArm/Link1>
+            point3f physics:localPos0 = (0, 0.5, 0)
+            point3f physics:localPos1 = (0, -1.5, 0)
+            float physics:lowerLimit = -150
+            float physics:upperLimit = 150
+        }
+
+        def PhysicsRevoluteJoint "J2" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular"]
+        )
+        {
+            float drive:angular:physics:damping = 20
+            float drive:angular:physics:maxForce = 500
+            float drive:angular:physics:stiffness = 400
+            float drive:angular:physics:targetPosition = -45
+            uniform token drive:angular:physics:type = "angular"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </World/RobotArm/Link1>
+            rel physics:body1 = </World/RobotArm/Link2>
+            point3f physics:localPos0 = (0, 1.5, 0)
+            point3f physics:localPos1 = (0, 0, -1)
+            float physics:lowerLimit = -90
+            float physics:upperLimit = 90
+        }
+
+        def PhysicsRevoluteJoint "J3" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular"]
+        )
+        {
+            float drive:angular:physics:damping = 20
+            float drive:angular:physics:maxForce = 500
+            float drive:angular:physics:stiffness = 400
+            float drive:angular:physics:targetPosition = -60
+            uniform token drive:angular:physics:type = "angular"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </World/RobotArm/Link2>
+            rel physics:body1 = </World/RobotArm/Link3>
+            point3f physics:localPos0 = (0, 0, 1)
+            point3f physics:localPos1 = (0, 0, -0.75)
+            float physics:lowerLimit = -120
+            float physics:upperLimit = 0
+        }
+    }
+}
+

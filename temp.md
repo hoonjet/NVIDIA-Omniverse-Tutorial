@@ -19,3 +19,7 @@ Dear Bank of America Support Team,
  I look forward to your prompt response.
 
 Changhoon Oh
+
+
+22A1010601-10282
+2022 8 10

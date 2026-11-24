@@ -9,7 +9,7 @@ Each tutorial is self-contained and writes its output into its own `output\` fol
 ## Directory Structure
 
 ```
-E:\omniverse_env\
+YOUR_DIRECTORY\omniverse_env\
 ├── tutorials\                       # All 20 tutorials, grouped by category
 │   ├── usd_basics\                  # Tutorial Set 1: USD fundamentals
 │   │   ├── 01_usd_basics\
@@ -72,7 +72,7 @@ Each tutorial folder follows the same layout:
 ### 1. Activate the virtual environment
 
 ```batch
-cd E:\omniverse_env
+cd YOUR_DIRECTORY\omniverse_env
 Scripts\activate
 ```
 
@@ -238,7 +238,7 @@ and **Troubleshooting**. For deeper background, see the reference manuals in
 
 ## Environment
 
-- **Python:** 3.x virtual environment at `E:\omniverse_env`
+- **Python:** 3.x virtual environment at `YOUR_DIRECTORY\omniverse_env`
 - **USD:** 26.x via `usd-core` (`pip install usd-core`)
 - **PhysicsNeMo:** optional — tutorials 09–11 auto-detect and fall back to
   synthetic data when unavailable

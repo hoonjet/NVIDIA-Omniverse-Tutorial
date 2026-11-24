@@ -8,9 +8,9 @@
 
 | Metric | Value |
 |--------|-------|
-| Tutorials verified | 14 / 14 |
-| Total checks | 193 |
-| Passed | 193 |
+| Tutorials verified | 20 / 20 |
+| Total checks | 307 |
+| Passed | 307 |
 | Failed | 0 |
 | **Result** | **ALL PASS** |
 
@@ -25,7 +25,7 @@ that each tutorial produced the correct USD output.
 ## How to Reproduce
 
 ```powershell
-cd E:\omniverse_env
+cd YOUR_DIRECTORY\omniverse_env
 .\Scripts\activate
 python tools\verify_all_tutorials.py
 ```
@@ -178,9 +178,9 @@ reusable connector class supporting batch processing.
 
 | Check | Result |
 |-------|--------|
-| CSV file (100 points) created | ✅ PASS |
+| CSV file (20 points) created | ✅ PASS |
 | JSON file created | ✅ PASS |
-| 100 sphere prims from CSV data | ✅ PASS |
+| 20 sphere prims from CSV data | ✅ PASS |
 | JSON scene converted to USD prim | ✅ PASS |
 | Batch-processed JSON scene | ✅ PASS |
 
@@ -214,8 +214,8 @@ height field, velocity points, and simulation metadata.
 | Check | Result |
 |-------|--------|
 | Darcy flow JSON data exists | ✅ PASS |
-| 225 pressure points (15×15 grid) | ✅ PASS |
-| 225 height field columns | ✅ PASS |
+| 12 pressure points (4×3 grid) | ✅ PASS |
+| 12 height field columns | ✅ PASS |
 | Velocity point cloud exists | ✅ PASS |
 | SimulationMetadata with ≥5 fields | ✅ PASS |
 
@@ -225,14 +225,14 @@ height field, velocity points, and simulation metadata.
 
 **What it demonstrates:**
 Time-varying simulation visualization: 10×10 grid with colors and heights
-changing across 10 timesteps (frames 1–109).
+changing across 3 timesteps (frames 1–25).
 
 **Verified output** (`10_simulation_visual.usda`):
 
 | Check | Result |
 |-------|--------|
-| Timeline: frames 1–109 | ✅ PASS |
-| 100 color map points (10×10 grid) | ✅ PASS |
+| Timeline: frames 1–25 | ✅ PASS |
+| 6 color map points (3×2 grid) | ✅ PASS |
 | Time-sampled colors on points | ✅ PASS |
 | Animated height field exists | ✅ PASS |
 | Velocity vector field exists | ✅ PASS |
@@ -333,9 +333,20 @@ skinned mesh with joint indices/weights, and BlendShape.
 7. **Instance verification** — `prim.IsInstanceable()`
 8. **File existence** — checking for `.usda`, `.json`, `.txt`, `.toml` output files
 
+## Tutorial Set 5 — Simulation→USD Pipelines (Tutorials 15–20)
+
+| Tutorial | Key verified facts |
+|----------|--------------------|
+| 15 — Composition LIVRPS | 6 arcs co-exist in one stage; sublayer strength = FIRST-listed wins (`blue-concrete` over `green-painted`); winning-opinion arc types (`Root`/`Inherit`/`Variant`/`Payload`) confirmed via `UsdResolveInfo.GetNode().arcType`; local `over` beats reference opinion |
+| 16 — Custom Schemas | Codeless `SimulationDataAPI` registers via `PXR_PLUGINPATH_NAME` + `plugInfo.json`; `HasAPI`/`GetPrimDefinition().GetAppliedAPISchemas()` confirm application; fallback values (timeStep 0.016, darcy, 500 iters) resolve on a freshly applied prim with no authored opinions |
+| 17 — PointInstancer | `UsdGeom.PointInstancer` with 1000 positions, 1000 protoIndices (all prototype #0), prototypes rel → `SensorProto`; vertical helix spanning y≈0–40 scene units (metersPerUnit 0.01) |
+| 18 — Value Clips | Template clip set (`sim_t.####.usd`, stride 1, t∈[0,4]) + manifest; temperature slides 20→40→60→80→100 per timecode; `GetResolveInfo().GetSource() == ResolveInfoSourceValueClips` |
+| 19 — Volume Field | `UsdVol.Volume` + `OpenVDBAsset` (fieldIndex int, `temperature.vdb`); `field:temperature` relationship targets the field prim; 32-voxel `PointInstancer` visualization with `elementSize=32` per-instance displayColor, animated between t=0 and t=1 |
+| 20 — Physics Articulation | `PhysicsArticulationRootAPI` on `/World/RobotArm`; kinematic base; 3 `PhysicsRevoluteJoint`s with limits (±150 / ±90 / [-120, 0]), body0/body1 wiring, and position-servo `DriveAPI` (target 30/-45/-60, stiffness 400, damping 20, maxForce 500) |
+
 ## Conclusion
 
-All 14 tutorials execute successfully and produce valid USD output. The
+All 20 tutorials execute successfully and produce valid USD output. The
 verification script (`verify_all_tutorials.py`) programmatically inspects
 every output file using the USD Python API, confirming that the expected prims,
 schemas, attributes, relationships, and time-sampled values are all present and

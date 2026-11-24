@@ -9,8 +9,8 @@ Each tutorial is self-contained and writes its output into its own `output\` fol
 ## Directory Structure
 
 ```
-YOUR_DIRECTORY\omniverse_env\
-├── tutorials\                       # All 14 tutorials, grouped by category
+E:\omniverse_env\
+├── tutorials\                       # All 20 tutorials, grouped by category
 │   ├── usd_basics\                  # Tutorial Set 1: USD fundamentals
 │   │   ├── 01_usd_basics\
 │   │   │   ├── 01_usd_basics.py
@@ -46,12 +46,12 @@ YOUR_DIRECTORY\omniverse_env\
 ├── tools\                           # Visualization & inspection tools
 │   ├── scene_inspector.py           # Text-based prim tree (no deps)
 │   ├── visualize.py                 # 3D matplotlib visualizer (needs matplotlib)
-│   ├── verify_all_tutorials.py      # Programmatic verification (193 checks)
+│   ├── verify_all_tutorials.py      # Programmatic verification (307 checks)
 │   ├── verification_report.md       # Detailed verification report
 │   └── guide.md                     # Tool usage guide
-├── Include\                         # Python headers (venv)
-├── Lib\                             # Python packages (venv)
-├── Scripts\                         # venv executables (activate, python.exe)
+├── Include\                         # Python headers (not included)
+├── Lib\                             # Python packages (not included)
+├── Scripts\                         # venv executables (not included)
 ├── test_usd_import.py               # Quick USD import sanity check
 └── pyvenv.cfg                       # Virtual environment config
 ```
@@ -72,7 +72,7 @@ Each tutorial folder follows the same layout:
 ### 1. Activate the virtual environment
 
 ```batch
-cd YOUR_DIRECTORY\omniverse_env
+cd E:\omniverse_env
 Scripts\activate
 ```
 
@@ -132,12 +132,12 @@ attributes, relationships, time-sampled values), run the verification script:
 python tools\verify_all_tutorials.py
 ```
 
-This runs **193 automated checks** across all 14 tutorials — no GPU or RTX
+This runs **307 automated checks** across all 20 tutorials — no GPU or RTX
 required. Expected output:
 
 ```
-SUMMARY: 193 passed, 0 failed, 193 total
-All 14 tutorials verified successfully!
+SUMMARY: 307 passed, 0 failed, 307 total
+All 20 tutorials verified successfully!
 ```
 
 See `tools\verification_report.md` for a detailed per-tutorial breakdown.
@@ -238,7 +238,7 @@ and **Troubleshooting**. For deeper background, see the reference manuals in
 
 ## Environment
 
-- **Python:** 3.x virtual environment at `YOUR_DIRECTORY\omniverse_env`
+- **Python:** 3.x virtual environment at `E:\omniverse_env`
 - **USD:** 26.x via `usd-core` (`pip install usd-core`)
 - **PhysicsNeMo:** optional — tutorials 09–11 auto-detect and fall back to
   synthetic data when unavailable

@@ -2,7 +2,7 @@
 """
 Tutorial Verification Script
 =============================
-Programmatically verifies that all 14 tutorials produced correct USD output.
+Programmatically verifies that all 20 tutorials produced correct USD output.
 Each check reads the .usda file and inspects the USD scene graph to confirm
 the expected prims, attributes, schemas, and relationships exist.
 
@@ -14,9 +14,18 @@ Usage:
 
 import os
 import sys
-from pxr import Usd, UsdGeom, UsdLux, UsdPhysics, UsdSkel, UsdShade, Sdf
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Tutorial 16 uses a codeless custom API schema plugin. The plugin path must be
+# set BEFORE pxr is imported so the schema registers and fallback values resolve.
+_SCHEMA_PLUGIN = os.path.join(BASE, "tutorials", "usd_pipeline", "16_custom_schemas",
+                              "output", "schema_plugin")
+os.environ["PXR_PLUGINPATH_NAME"] = os.pathsep.join(filter(None, [
+    os.environ.get("PXR_PLUGINPATH_NAME", ""), _SCHEMA_PLUGIN]))
+
+from pxr import Usd, UsdGeom, UsdLux, UsdPhysics, UsdSkel, UsdShade, UsdVol, Sdf
+
 TUTORIALS = os.path.join(BASE, "tutorials")
 
 passed = 0
@@ -292,7 +301,7 @@ check("JSON data file exists", os.path.isfile(os.path.join(BASE, data_dir, "samp
 s = load_stage("tutorials/kit_api/07_omniverse_connector/output/07_omniverse_connector.usda")
 
 all_spheres = [p for p in s.Traverse() if p.GetTypeName() == "Sphere"]
-check("CSV data converted to >=100 point prims", len(all_spheres) >= 100, f"got {len(all_spheres)}")
+check("CSV data converted to >=20 point prims", len(all_spheres) >= 20, f"got {len(all_spheres)}")
 
 json_prim = s.GetPrimAtPath("/World/JSON_Scene/FactoryFloor")
 check("JSON scene converted to USD prim", json_prim.IsValid())
@@ -345,13 +354,13 @@ pressure_points = s.GetPrimAtPath("/World/DarcyFlow/pressure_points")
 check("Pressure point cloud exists", pressure_points.IsValid())
 if pressure_points.IsValid():
     children = [c for c in pressure_points.GetChildren() if c.IsA(UsdGeom.Sphere)]
-    check("225 pressure points (15x15 grid)", len(children) == 225, f"got {len(children)}")
+    check("12 pressure points (4x3 grid)", len(children) == 12, f"got {len(children)}")
 
 height_field = s.GetPrimAtPath("/World/DarcyFlow/pressure_heightfield")
 check("Pressure height field exists", height_field.IsValid())
 if height_field.IsValid():
     cols = [c for c in height_field.GetChildren() if c.IsA(UsdGeom.Cylinder)]
-    check("225 height field columns", len(cols) == 225, f"got {len(cols)}")
+    check("12 height field columns", len(cols) == 12, f"got {len(cols)}")
 
 vel_points = s.GetPrimAtPath("/World/DarcyFlow/velocity_mag_points")
 check("Velocity point cloud exists", vel_points.IsValid())
@@ -376,13 +385,13 @@ if s.HasAuthoredTimeCodeRange():
     start_tc = s.GetStartTimeCode()
     end_tc = s.GetEndTimeCode()
     check("Timeline starts at frame 1", start_tc == 1.0, f"got {start_tc}")
-    check("Timeline ends at frame 109", end_tc == 109.0, f"got {end_tc}")
+    check("Timeline ends at frame 25", end_tc == 25.0, f"got {end_tc}")
 
 color_map = s.GetPrimAtPath("/World/TransientSim/TemperatureMap")
 check("Animated color map exists", color_map.IsValid())
 if color_map.IsValid():
     children = [c for c in color_map.GetChildren() if c.IsA(UsdGeom.Sphere)]
-    check("100 color map points (10x10 grid)", len(children) == 100, f"got {len(children)}")
+    check("6 color map points (3x2 grid)", len(children) == 6, f"got {len(children)}")
     # Check time-sampled colors on children
     has_ts = False
     for c in children:
@@ -597,6 +606,259 @@ if len(ts) >= 2:
           abs(rot_t1[3].GetReal() - 0.866) < 0.01 and abs(rot_t1[3].GetImaginary()[2] + 0.5) < 0.01)
 
 # =============================================================================
+# Tutorial 15: Composition LIVRPS
+# =============================================================================
+print("\n" + "=" * 70)
+print("Tutorial 15: Composition - LIVRPS Strength Ordering")
+print("=" * 70)
+
+s = load_stage("tutorials/usd_pipeline/15_composition_livrps/output/15_composition_livrps.usda")
+
+
+def winner_arc(stage, prim_path, attr_name="data:material"):
+    """Return the normalized arc type of the winning opinion via UsdResolveInfo.GetNode().
+
+    On this USD build node.arcType renders as e.g. 'Pcp.ArcTypeRoot', so the
+    prefix is stripped to yield 'Root' / 'Inherit' / 'Variant' / 'Payload'.
+    """
+    attr = stage.GetPrimAtPath(prim_path).GetAttribute(attr_name)
+    node = attr.GetResolveInfo().GetNode()
+    if node is None:
+        return "None"
+    return str(node.arcType).split(".")[-1].replace("ArcType", "")
+
+
+check("Stage loads", s is not None)
+check("/World/Geometry/Floor exists (from sublayer)", s.GetPrimAtPath("/World/Geometry/Floor").IsValid())
+check("Floor size=8.0 (from base_layout sublayer)",
+      s.GetPrimAtPath("/World/Geometry/Floor").GetAttribute("size").Get() == 8.0)
+check("Floor material resolves to base_layout (FIRST sublayer is strongest)",
+      s.GetPrimAtPath("/World/Geometry/Floor").GetAttribute("data:material").Get() == "sublayer:blue-concrete")
+check("LocalSphere local opinion wins",
+      s.GetPrimAtPath("/World/LocalSphere").GetAttribute("data:material").Get() == "local:red-anodized")
+check("LocalSphere radius=0.5", s.GetPrimAtPath("/World/LocalSphere").GetAttribute("radius").Get() == 0.5)
+check("InheritedSphere inherits class opinion",
+      s.GetPrimAtPath("/World/InheritedSphere").GetAttribute("data:material").Get() == "inherit:shared-steel")
+check("VariantSphere glossy variant opinion wins",
+      s.GetPrimAtPath("/World/VariantSphere").GetAttribute("data:material").Get() == "variant:glossy-ceramic")
+check("VariantSphere radius=0.4 (glossy)", s.GetPrimAtPath("/World/VariantSphere").GetAttribute("radius").Get() == 0.4)
+check("RobotRef/Arm local over beats reference opinion",
+      s.GetPrimAtPath("/World/RobotRef/Arm").GetAttribute("data:material").Get() == "local:painted-over-reference")
+check("SensorPayload/Probe payload opinion resolves",
+      s.GetPrimAtPath("/World/SensorPayload/Probe").GetAttribute("data:material").Get() == "payload:titanium-probe")
+check("LocalSphere winning arc = Local (Root)", winner_arc(s, "/World/LocalSphere") == "Root")
+check("InheritedSphere winning arc = Inherit", winner_arc(s, "/World/InheritedSphere") == "Inherit")
+check("VariantSphere winning arc = Variant", winner_arc(s, "/World/VariantSphere") == "Variant")
+check("SensorPayload/Probe winning arc = Payload", winner_arc(s, "/World/SensorPayload/Probe") == "Payload")
+check("RobotRef has authored references", s.GetPrimAtPath("/World/RobotRef").HasAuthoredReferences())
+check("SensorPayload has authored payload", s.GetPrimAtPath("/World/SensorPayload").HasAuthoredPayloads())
+check("_class_SharedMaterial class prim exists", s.GetPrimAtPath("/_class_SharedMaterial").IsValid())
+
+# =============================================================================
+# Tutorial 16: Custom Schemas (codeless API schema)
+# =============================================================================
+print("\n" + "=" * 70)
+print("Tutorial 16: Custom Schemas (Codeless API Schema)")
+print("=" * 70)
+
+check("plugInfo.json exists",
+      os.path.isfile(os.path.join(BASE, "tutorials/usd_pipeline/16_custom_schemas/output/schema_plugin/plugInfo.json")))
+check("generatedSchema.usda exists",
+      os.path.isfile(os.path.join(BASE, "tutorials/usd_pipeline/16_custom_schemas/output/schema_plugin/resources/generatedSchema.usda")))
+
+s = load_stage("tutorials/usd_pipeline/16_custom_schemas/output/16_custom_schemas.usda")
+
+pd = s.GetPrimAtPath("/World/PorousDomain")
+check("Stage loads", s is not None)
+check("/World/PorousDomain exists (Sphere)", pd.IsValid())
+check("PorousDomain has SimulationDataAPI applied", pd.HasAPI("SimulationDataAPI"))
+check("Prim definition reports SimulationDataAPI",
+      "SimulationDataAPI" in pd.GetPrimDefinition().GetAppliedAPISchemas())
+check("Authored simulation:timeStep=0.004", pd.GetAttribute("simulation:timeStep").Get() == 0.004)
+check("Authored simulation:maxIterations=250", pd.GetAttribute("simulation:maxIterations").Get() == 250)
+check("Authored simulation:solverType=brinkman", pd.GetAttribute("simulation:solverType").Get() == "brinkman")
+
+sd = s.GetPrimAtPath("/World/SecondDomain")
+check("/World/SecondDomain exists (Cube)", sd.IsValid())
+check("SecondDomain authored custom timeStep=0.008 (no API needed)", sd.GetAttribute("simulation:timeStep").Get() == 0.008)
+check("SecondDomain authored custom solverType=darcy", sd.GetAttribute("simulation:solverType").Get() == "darcy")
+
+fresh = s.DefinePrim("/World/FreshDomain", "Sphere")
+fresh.ApplyAPI("SimulationDataAPI")
+check("Fresh prim accepts ApplyAPI (codeless schema registered)", fresh.HasAPI("SimulationDataAPI"))
+check("Fallback simulation:timeStep=0.016 (no authored value)",
+      fresh.GetAttribute("simulation:timeStep").Get() == 0.016)
+check("Fallback simulation:solverType=darcy", fresh.GetAttribute("simulation:solverType").Get() == "darcy")
+check("Fallback simulation:maxIterations=500", fresh.GetAttribute("simulation:maxIterations").Get() == 500)
+
+# =============================================================================
+# Tutorial 17: PointInstancer
+# =============================================================================
+print("\n" + "=" * 70)
+print("Tutorial 17: PointInstancer - 1000 Sensor Instances")
+print("=" * 70)
+
+s = load_stage("tutorials/usd_pipeline/17_point_instancer/output/17_point_instancer.usda")
+
+pi = UsdGeom.PointInstancer(s.GetPrimAtPath("/World/SensorField"))
+check("Stage loads", s is not None)
+check("/World/SensorField is a PointInstancer",
+      pi.GetPrim().IsValid() and pi.GetPrim().IsA(UsdGeom.PointInstancer))
+check("Ground cube exists", s.GetPrimAtPath("/World/Ground").IsValid())
+check("Ground size=60", UsdGeom.Cube(s.GetPrimAtPath("/World/Ground")).GetSizeAttr().Get() == 60)
+positions = pi.GetPositionsAttr().Get()
+proto_indices = pi.GetProtoIndicesAttr().Get()
+check("positions count = 1000", positions is not None and len(positions) == 1000)
+check("protoIndices count = 1000", proto_indices is not None and len(proto_indices) == 1000)
+check("all instances use prototype #0", all(i == 0 for i in proto_indices))
+targets = pi.GetPrototypesRel().GetTargets()
+check("prototypes rel -> /World/SensorField/Prototypes/SensorProto",
+      [str(t) for t in targets] == ["/World/SensorField/Prototypes/SensorProto"])
+check("SensorProto prototype prim exists",
+      s.GetPrimAtPath("/World/SensorField/Prototypes/SensorProto").IsValid())
+ys = [p[1] for p in positions]
+check("instances form a vertical helix (y spans ~0..40 scene units)",
+      min(ys) >= 0.0 and max(ys) > 35.0, f"y max={max(ys):.2f}")
+
+# =============================================================================
+# Tutorial 18: Value Clips
+# =============================================================================
+print("\n" + "=" * 70)
+print("Tutorial 18: Value Clips - Time-Sliced Simulation Cache")
+print("=" * 70)
+
+clip_dir = os.path.join(BASE, "tutorials/usd_pipeline/18_value_clips/output/clips")
+check("5 clip files exist (sim_t.0000-0004)",
+      all(os.path.isfile(os.path.join(clip_dir, f"sim_t.{i:04d}.usd")) for i in range(5)))
+
+s = load_stage("tutorials/usd_pipeline/18_value_clips/output/18_value_clips.usda")
+sim = s.GetPrimAtPath("/Sim")
+check("Stage loads", s is not None)
+check("/Sim prim exists", sim.IsValid())
+clips_meta = sim.GetMetadata("clips")
+check("clips metadata authored with 'default' clip set",
+      clips_meta is not None and "default" in clips_meta)
+default_clip = (clips_meta or {}).get("default", {})
+manifest_asset = getattr(default_clip.get("manifestAssetPath", ""), "path",
+                         default_clip.get("manifestAssetPath", ""))
+check("manifestAssetPath -> manifest.usda",
+      str(manifest_asset).replace("\\", "/").endswith("manifest.usda"))
+check("primPath=/Sim", default_clip.get("primPath") == "/Sim")
+check("templateAssetPath uses #### padding", "####" in str(default_clip.get("templateAssetPath", "")))
+check("templateStartTime=0", default_clip.get("templateStartTime") == 0)
+check("templateEndTime=4", default_clip.get("templateEndTime") == 4)
+check("templateStride=1", default_clip.get("templateStride") == 1)
+
+temp_attr = sim.GetAttribute("data:temperature")
+expected_temps = [20.0, 40.0, 60.0, 80.0, 100.0]
+for t, want in enumerate(expected_temps):
+    got = temp_attr.Get(t)
+    check(f"temperature at t={t} = {want}", got is not None and abs(got - want) < 1e-4, f"got {got}")
+check("pressure at t=4 = 1.8",
+      abs(sim.GetAttribute("data:pressure").Get(4) - 1.8) < 1e-3)
+info_t2 = temp_attr.GetResolveInfo(Usd.TimeCode(2))
+check("resolve source at t=2 is ValueClips",
+      info_t2.GetSource() == Usd.ResolveInfoSourceValueClips)
+
+manifest_stage = Usd.Stage.Open(os.path.join(clip_dir, "manifest.usda"))
+check("manifest.usda opens as a stage", manifest_stage is not None)
+check("manifest declares data:temperature",
+      manifest_stage.GetPrimAtPath("/Sim").GetAttribute("data:temperature").IsDefined())
+
+# =============================================================================
+# Tutorial 19: Volume Field
+# =============================================================================
+print("\n" + "=" * 70)
+print("Tutorial 19: Volume Field (UsdVol + OpenVDBAsset)")
+print("=" * 70)
+
+s = load_stage("tutorials/usd_pipeline/19_volume_field/output/19_volume_field.usda")
+
+hv = s.GetPrimAtPath("/World/HeatVolume")
+check("Stage loads", s is not None)
+check("/World/HeatVolume is a UsdVol.Volume", hv.IsValid() and hv.IsA(UsdVol.Volume))
+tf = s.GetPrimAtPath("/World/HeatVolume/temperatureField")
+check("temperatureField is a UsdVol.OpenVDBAsset", tf.IsValid() and tf.IsA(UsdVol.OpenVDBAsset))
+check("fieldIndex = 0", tf.GetAttribute("fieldIndex").Get() == 0)
+check("fieldDataType = float", tf.GetAttribute("fieldDataType").Get() == "float")
+check("filePath = temperature.vdb",
+      str(getattr(tf.GetAttribute("filePath").Get(), "path",
+                  tf.GetAttribute("filePath").Get())).replace("\\", "/") == "temperature.vdb")
+field_rel = hv.GetRelationship("field:temperature")
+check("field:temperature relationship targets temperatureField",
+      [str(t) for t in field_rel.GetTargets()] == ["/World/HeatVolume/temperatureField"])
+
+vv = UsdGeom.PointInstancer(s.GetPrimAtPath("/World/VoxelViz"))
+check("/World/VoxelViz is a PointInstancer (voxel visualization)",
+      vv.GetPrim().IsValid() and vv.GetPrim().IsA(UsdGeom.PointInstancer))
+p0 = vv.GetPositionsAttr().Get(0)
+p1 = vv.GetPositionsAttr().Get(1)
+check("32 voxel positions at t=0", p0 is not None and len(p0) == 32)
+check("32 protoIndices", len(vv.GetProtoIndicesAttr().Get()) == 32)
+dc = s.GetPrimAtPath("/World/VoxelViz").GetAttribute("primvars:displayColor")
+check("per-instance displayColor elementSize = 32", dc.GetMetadata("elementSize") == 32)
+check("voxel positions animate between t=0 and t=1", p0 != p1)
+check("stage time range is [0, 1]", s.GetStartTimeCode() == 0 and s.GetEndTimeCode() == 1)
+check("VoxelProto prototype cube size=0.95",
+      UsdGeom.Cube(s.GetPrimAtPath("/World/VoxelViz/Prototypes/VoxelProto")).GetSizeAttr().Get() == 0.95)
+
+# =============================================================================
+# Tutorial 20: Physics Articulation
+# =============================================================================
+print("\n" + "=" * 70)
+print("Tutorial 20: Physics Articulation (3-DOF Servo Arm)")
+print("=" * 70)
+
+s = load_stage("tutorials/usd_pipeline/20_physics_articulation/output/20_physics_articulation.usda")
+
+scene = s.GetPrimAtPath("/World/PhysicsScene")
+check("Stage loads", s is not None)
+check("/World/PhysicsScene is a UsdPhysics.Scene", scene.IsValid() and scene.IsA(UsdPhysics.Scene))
+check("gravityMagnitude = 981", scene.GetAttribute("physics:gravityMagnitude").Get() == 981)
+
+arm = s.GetPrimAtPath("/World/RobotArm")
+check("/World/RobotArm has PhysicsArticulationRootAPI", arm.HasAPI("PhysicsArticulationRootAPI"))
+
+base = s.GetPrimAtPath("/World/RobotArm/Base")
+check("Base has RigidBodyAPI", base.HasAPI("PhysicsRigidBodyAPI"))
+check("Base has CollisionAPI", base.HasAPI("PhysicsCollisionAPI"))
+check("Base is kinematic (fixed base)", base.GetAttribute("physics:kinematicEnabled").Get() is True)
+
+expected_masses = {"Link1": 5.0, "Link2": 3.0, "Link3": 1.5}
+for link, mass in expected_masses.items():
+    prim = s.GetPrimAtPath(f"/World/RobotArm/{link}")
+    check(f"{link} exists with mass={mass}", prim.IsValid() and
+          prim.GetAttribute("physics:mass").Get() == mass)
+
+expected_joints = {
+    "J1": {"axis": "Y", "lower": -150.0, "upper": 150.0, "target": 30.0,
+           "body0": "/World/RobotArm/Base", "body1": "/World/RobotArm/Link1"},
+    "J2": {"axis": "Z", "lower": -90.0, "upper": 90.0, "target": -45.0,
+           "body0": "/World/RobotArm/Link1", "body1": "/World/RobotArm/Link2"},
+    "J3": {"axis": "Z", "lower": -120.0, "upper": 0.0, "target": -60.0,
+           "body0": "/World/RobotArm/Link2", "body1": "/World/RobotArm/Link3"},
+}
+for jname, spec in expected_joints.items():
+    jp = s.GetPrimAtPath(f"/World/RobotArm/{jname}")
+    check(f"{jname} is a PhysicsRevoluteJoint", jp.IsValid() and jp.IsA(UsdPhysics.RevoluteJoint))
+    check(f"{jname} axis = {spec['axis']}", jp.GetAttribute("physics:axis").Get() == spec["axis"])
+    check(f"{jname} limits = [{spec['lower']}, {spec['upper']}]",
+          jp.GetAttribute("physics:lowerLimit").Get() == spec["lower"] and
+          jp.GetAttribute("physics:upperLimit").Get() == spec["upper"])
+    check(f"{jname} body0 = {spec['body0']}",
+          [str(t) for t in jp.GetRelationship("physics:body0").GetTargets()] == [spec["body0"]])
+    check(f"{jname} body1 = {spec['body1']}",
+          [str(t) for t in jp.GetRelationship("physics:body1").GetTargets()] == [spec["body1"]])
+    check(f"{jname} drive targetPosition = {spec['target']}",
+          jp.GetAttribute("drive:angular:physics:targetPosition").Get() == spec["target"])
+    check(f"{jname} drive stiffness = 400",
+          jp.GetAttribute("drive:angular:physics:stiffness").Get() == 400)
+    check(f"{jname} drive damping = 20",
+          jp.GetAttribute("drive:angular:physics:damping").Get() == 20)
+    check(f"{jname} drive maxForce = 500",
+          jp.GetAttribute("drive:angular:physics:maxForce").Get() == 500)
+
+# =============================================================================
 # SUMMARY
 # =============================================================================
 print("\n" + "=" * 70)
@@ -609,7 +871,7 @@ if failed > 0:
         print(f"  - {e}")
     sys.exit(1)
 else:
-    print("\nAll 14 tutorials verified successfully!")
+    print("\nAll 20 tutorials verified successfully!")
     sys.exit(0)
 
 

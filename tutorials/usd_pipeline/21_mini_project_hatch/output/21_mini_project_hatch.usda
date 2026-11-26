@@ -1,0 +1,83 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    endTimeCode = 3
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def PhysicsScene "PhysicsScene"
+    {
+        vector3f physics:gravityDirection = (0, -1, 0)
+        float physics:gravityMagnitude = 981
+    }
+
+    def "Hatch"
+    {
+        def Cube "Frame" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI"]
+        )
+        {
+            bool physics:kinematicEnabled = 1
+            double size = 4
+            double3 xformOp:translate = (0, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Cube "Door" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsMassAPI"]
+        )
+        {
+            float physics:mass = 1.5
+            double size = 3.8
+            double3 xformOp:translate = (0, 2, 2)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def PhysicsRevoluteJoint "Hinge" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular"]
+        )
+        {
+            float drive:angular:physics:damping = 10
+            float drive:angular:physics:maxForce = 500
+            float drive:angular:physics:stiffness = 200
+            float drive:angular:physics:targetPosition.timeSamples = {
+                0: 0,
+                1: 0,
+                2: 44,
+                3: 110,
+            }
+            uniform token drive:angular:physics:type = "angular"
+            uniform token physics:axis = "X"
+            rel physics:body0 = </World/Hatch/Frame>
+            rel physics:body1 = </World/Hatch/Door>
+            point3f physics:localPos0 = (0, 0, -2)
+            point3f physics:localPos1 = (0, 0, -1.9)
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 110
+        }
+    }
+
+    def Xform "Sensor" (
+        clips = {
+            dictionary default = {
+                asset manifestAssetPath = @./clips/manifest.usda@
+                string primPath = "/World/Sensor"
+                string templateAssetPath = "./clips/sim_t.####.usd"
+                double templateEndTime = 3
+                double templateStartTime = 0
+                double templateStride = 1
+            }
+        }
+    )
+    {
+        custom float data:temperature
+        custom rel sensor:mountedOn = </World/Hatch/Frame>
+        double3 xformOp:translate = (2.2, 0.5, 2.2)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+}
+

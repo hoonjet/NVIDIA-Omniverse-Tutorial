@@ -10,7 +10,7 @@ Each tutorial is self-contained and writes its output into its own `output\` fol
 
 ```
 YOUR_DIRECTORY\omniverse_env\
-├── tutorials\                       # All 20 tutorials, grouped by category
+├── tutorials\                       # All 23 tutorials, grouped by category
 │   ├── usd_basics\                  # Tutorial Set 1: USD fundamentals
 │   │   ├── 01_usd_basics\
 │   │   │   ├── 01_usd_basics.py
@@ -38,7 +38,10 @@ YOUR_DIRECTORY\omniverse_env\
 │       ├── 17_point_instancer\       …
 │       ├── 18_value_clips\           …
 │       ├── 19_volume_field\          …
-│       └── 20_physics_articulation\  …
+│       ├── 20_physics_articulation\  …
+│       ├── 21_mini_project_hatch\    …
+│       ├── 22_mini_project_gate\     …
+│       └── 23_mini_project_plate\     …
 ├── docs\                            # Reference manuals
 │   ├── USD_Basics_Manual.md
 │   ├── Kit_API_Manual.md
@@ -46,12 +49,12 @@ YOUR_DIRECTORY\omniverse_env\
 ├── tools\                           # Visualization & inspection tools
 │   ├── scene_inspector.py           # Text-based prim tree (no deps)
 │   ├── visualize.py                 # 3D matplotlib visualizer (needs matplotlib)
-│   ├── verify_all_tutorials.py      # Programmatic verification (307 checks)
+│   ├── verify_all_tutorials.py      # Programmatic verification (348 checks)
 │   ├── verification_report.md       # Detailed verification report
 │   └── guide.md                     # Tool usage guide
-├── Include\                         # Python headers (not included)
-├── Lib\                             # Python packages (not included)
-├── Scripts\                         # venv executables (not included)
+├── Include\                         # Python headers (venv)
+├── Lib\                             # Python packages (venv)
+├── Scripts\                         # venv executables (activate, python.exe)
 ├── test_usd_import.py               # Quick USD import sanity check
 └── pyvenv.cfg                       # Virtual environment config
 ```
@@ -132,12 +135,12 @@ attributes, relationships, time-sampled values), run the verification script:
 python tools\verify_all_tutorials.py
 ```
 
-This runs **307 automated checks** across all 20 tutorials — no GPU or RTX
+This runs **348 automated checks** across all 23 tutorials — no GPU or RTX
 required. Expected output:
 
 ```
-SUMMARY: 307 passed, 0 failed, 307 total
-All 20 tutorials verified successfully!
+SUMMARY: 348 passed, 0 failed, 348 total
+All 23 tutorials verified successfully!
 ```
 
 See `tools\verification_report.md` for a detailed per-tutorial breakdown.
@@ -204,6 +207,9 @@ and articulated physics - the core USD machinery behind real simulation pipeline
 | 18 | [Value Clips](tutorials/usd_pipeline/18_value_clips/guide.md) | Time-sliced caches, template clip sets, manifest, ResolveInfoSourceValueClips | `18_value_clips.usda` + `clips\` |
 | 19 | [Volume Field](tutorials/usd_pipeline/19_volume_field/guide.md) | UsdVol.Volume, OpenVDBAsset, fields relationship, voxel PointInstancer viz | `19_volume_field.usda` |
 | 20 | [Physics Articulation](tutorials/usd_pipeline/20_physics_articulation/guide.md) | ArticulationRootAPI, kinematic base, RevoluteJoint limits, position servo DriveAPI | `20_physics_articulation.usda` |
+| 21 | [Mini Project: Dryer Hatch](tutorials/usd_pipeline/21_mini_project_hatch/guide.md) | One asset, one rule, one sensor; RevoluteJoint servo, Usd.ClipsAPI template set | `21_mini_project_hatch.usda` + `clips\` |
+| 22 | [Mini Project: Proximity Gate](tutorials/usd_pipeline/22_mini_project_gate/guide.md) | PrismaticJoint linear servo, distance sensor clips | `22_mini_project_gate.usda` + `clips\` |
+| 23 | [Mini Project: Pressure Plate](tutorials/usd_pipeline/23_mini_project_plate/guide.md) | Gravity + contact, load = mass * gravity consistency, load-cell clips | `23_mini_project_plate.usda` + `clips\` |
 
 ---
 
@@ -222,7 +228,7 @@ and **Troubleshooting**. For deeper background, see the reference manuals in
 |-----------|------------------------|----------------------|
 | 01–05 | **Fail** with `FileExistsError` if output exists | Delete the existing `.usda` (see each guide's Notes) |
 | 06–12 | **Auto-remove** existing output before regenerating | None — safe to re-run directly |
-| 15–20 | **Auto-remove** existing output before regenerating (including `output\` subfolders) | None — safe to re-run directly |
+| 15–23 | **Auto-remove** existing output before regenerating (including `output\` subfolders) | None — safe to re-run directly |
 
 ---
 

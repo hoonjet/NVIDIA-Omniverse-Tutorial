@@ -1,7 +1,7 @@
 # USD Visualization Tools
 
 This directory contains tools for inspecting and visually verifying USD tutorial
-output files. The tutorial suite spans **20 tutorials in five sets** under
+output files. The tutorial suite spans **23 tutorials in five sets** under
 `tutorials\`:
 
 | Set | Directory | Tutorials |
@@ -10,7 +10,7 @@ output files. The tutorial suite spans **20 tutorials in five sets** under
 | 2 — Kit API | `tutorials\kit_api\` | 06–08 |
 | 3 — PhysicsNeMo Integration | `tutorials\physicsnemo_integration\` | 09–11 |
 | 4 — USD Advanced | `tutorials\usd_advanced\` | 12–14 |
-| 5 — Simulation→USD Pipelines | `tutorials\usd_pipeline\` | 15–20 |
+| 5 — Simulation→USD Pipelines | `tutorials\usd_pipeline\` | 15–23 |
 
 Both inspection tools discover tutorial output automatically by walking
 `tutorials\`, so no configuration is needed when new tutorials are added.
@@ -24,7 +24,7 @@ Prints a formatted tree of all prims in a `.usda` file, showing their types, sch
 ### Usage
 
 ```bash
-cd YOUR_DIRECTORY\omniverse_env
+cd E:\omniverse_env
 Scripts\activate
 python tools\scene_inspector.py <path-to-usda-file>
 ```
@@ -87,7 +87,7 @@ Renders a 3D visualization of any USD stage using matplotlib, showing:
 ### Usage
 
 ```bash
-cd YOUR_DIRECTORY\omniverse_env
+cd E:\omniverse_env
 Scripts\activate
 
 # Interactive 3D window (rotate with mouse, zoom with scroll):
@@ -109,7 +109,7 @@ python tools\visualize.py tutorials\usd_advanced\12_usd_lighting\output\12_usd_l
 # Save physics tutorial as PNG:
 python tools\visualize.py tutorials\usd_advanced\13_usd_physics\output\13_usd_physics.usda --save --no-show
 
-# Generate PNGs for all tutorials (Sets 1–5, including tutorials 15–20):
+# Generate PNGs for all tutorials (Sets 1–5, including the 21–23 mini projects):
 python tools\visualize.py --all --save --no-show
 ```
 
@@ -137,7 +137,7 @@ python tools\visualize.py --all --save --no-show
 
 **No extra dependencies required** (uses only USD/pxr).
 
-Runs 307 automated checks across **all 20 tutorial** output files (Sets 1–5).
+Runs 348 automated checks across **all 23 tutorial** output files (Sets 1–5).
 Each check loads the `.usda` file into a USD Stage and inspects the scene graph to
 verify prims, schemas, attributes, relationships, time-sampled animation, material
 bindings, physics APIs, skeletal animation data, composition arc resolution, custom
@@ -151,7 +151,7 @@ before importing pxr, so the schema registers and fallback values resolve correc
 ### Usage
 
 ```powershell
-cd YOUR_DIRECTORY\omniverse_env
+cd E:\omniverse_env
 .\Scripts\activate
 python tools\verify_all_tutorials.py
 ```
@@ -176,12 +176,13 @@ python tools\verify_all_tutorials.py
 | Value clips | Template clip set metadata, per-timecode resolution, `ResolveInfoSourceValueClips` (Tutorial 18) |
 | Volume fields | `UsdVol.Volume`, `OpenVDBAsset` attrs, `field:temperature` relationship (Tutorial 19) |
 | Articulation | `PhysicsArticulationRootAPI`, kinematic base, joint limits/bodies, DriveAPI servos (Tutorial 20) |
+| Mini projects | Sensor clips → servo targets, `Usd.ClipsAPI` template sets, PrismaticJoint drive, load = mass × gravity (Tutorials 21–23) |
 
 ### Output
 
 ```
-SUMMARY: 307 passed, 0 failed, 307 total
-All 20 tutorials verified successfully!
+SUMMARY: 348 passed, 0 failed, 348 total
+All 23 tutorials verified successfully!
 ```
 
 Exits with code 0 on success, code 1 if any check fails.
@@ -195,7 +196,7 @@ A human-readable report documenting each tutorial's:
 - Verified output prims and attribute values
 - Pass/fail status for every check
 
-Covers all 20 tutorials (Sets 1–5). For tutorials 15–20 (`usd_pipeline`), each
+Covers all 23 tutorials (Sets 1–5). For tutorials 15–23 (`usd_pipeline`), each
 tutorial's own `guide.md` additionally documents the API quirks of the installed
 USD 26.3 build (e.g., `Pcp.ArcTypeRoot` normalization, codeless schema
 `plugInfo.json` requirements, `UsdGeom.PointInstancer` module-qualified class).

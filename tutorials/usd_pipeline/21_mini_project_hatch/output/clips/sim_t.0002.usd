@@ -1,0 +1,16 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    startTimeCode = 2
+    endTimeCode = 2
+)
+
+def Xform "World"
+{
+    def Xform "Sensor"
+    {
+        custom float data:temperature.timeSamples = {
+            2: 70.0000,
+        }
+    }
+}

@@ -1,0 +1,16 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    startTimeCode = 3
+    endTimeCode = 3
+)
+
+def Xform "World"
+{
+    def Xform "ProximitySensor"
+    {
+        custom float data:distance.timeSamples = {
+            3: 0.4000,
+        }
+    }
+}

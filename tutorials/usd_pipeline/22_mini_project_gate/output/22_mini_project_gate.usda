@@ -1,0 +1,84 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    endTimeCode = 3
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def PhysicsScene "PhysicsScene"
+    {
+        vector3f physics:gravityDirection = (0, -1, 0)
+        float physics:gravityMagnitude = 981
+    }
+
+    def "Gate"
+    {
+        def Cube "Frame" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI"]
+        )
+        {
+            bool physics:kinematicEnabled = 1
+            double size = 0.3
+            double3 xformOp:translate = (-3, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Cube "Slider" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsMassAPI"]
+        )
+        {
+            float physics:mass = 20
+            double size = 6
+            double3 xformOp:translate = (0, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def PhysicsPrismaticJoint "Rail" (
+            prepend apiSchemas = ["PhysicsDriveAPI:linear"]
+        )
+        {
+            float drive:linear:physics:damping = 30
+            float drive:linear:physics:maxForce = 1000
+            float drive:linear:physics:stiffness = 500
+            float drive:linear:physics:targetPosition.timeSamples = {
+                0: 0,
+                1: 0,
+                2: 6,
+                3: 6,
+            }
+            uniform token drive:linear:physics:type = "linear"
+            uniform token physics:axis = "X"
+            rel physics:body0 = </World/Gate/Frame>
+            rel physics:body1 = </World/Gate/Slider>
+            point3f physics:localPos0 = (3, 0, 0)
+            point3f physics:localPos1 = (-3, 0, 0)
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 6
+        }
+    }
+
+    def Sphere "ProximitySensor" (
+        clips = {
+            dictionary default = {
+                asset manifestAssetPath = @./clips/manifest.usda@
+                string primPath = "/World/ProximitySensor"
+                string templateAssetPath = "./clips/sim_t.####.usd"
+                double templateEndTime = 3
+                double templateStartTime = 0
+                double templateStride = 1
+            }
+        }
+    )
+    {
+        custom float data:distance
+        double radius = 0.2
+        custom rel sensor:mountedOn = </World/Gate/Frame>
+        double3 xformOp:translate = (3.5, 1, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+}
+
